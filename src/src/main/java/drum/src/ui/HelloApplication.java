@@ -1,4 +1,4 @@
-package drum.src;
+package drum.src.ui;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
