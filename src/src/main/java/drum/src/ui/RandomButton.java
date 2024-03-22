@@ -1,6 +1,9 @@
 package drum.src.ui;
 
+import drum.src.sequencer.Sequence;
 import javafx.scene.control.Button;
+
+
 
 public class RandomButton extends AbstractButton{
     private Button button;

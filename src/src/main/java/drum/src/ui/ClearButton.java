@@ -1,5 +1,6 @@
 package drum.src.ui;
 
+import drum.src.sequencer.Sequencer;
 import javafx.scene.control.Button;
 
 public class ClearButton extends AbstractButton {

@@ -1,5 +1,7 @@
 package drum.src.ui;
 
+import drum.src.sequencer.Sequencer;
+
 public abstract class AbstractButton {
     boolean isTriggered = false;
     Sequencer seq;

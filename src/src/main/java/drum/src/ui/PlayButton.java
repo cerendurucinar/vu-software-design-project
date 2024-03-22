@@ -1,5 +1,6 @@
 package drum.src.ui;
 
+import drum.src.sequencer.Sequencer;
 import javafx.scene.control.Button;
 
 import javax.sound.midi.MidiChannel;

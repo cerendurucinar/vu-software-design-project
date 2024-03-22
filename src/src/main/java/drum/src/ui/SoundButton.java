@@ -1,10 +1,12 @@
 package drum.src.ui;
 
-import com.example.demo5.AbstractButton;
-import com.example.demo5.Sound;
+
+import drum.src.sound.Sound;
+import drum.src.sequencer.Sequence;
 import javafx.animation.ScaleTransition;
 import javafx.scene.control.Button;
 import javafx.util.Duration;
+
 
 public class SoundButton extends AbstractButton {
     private Button button;
