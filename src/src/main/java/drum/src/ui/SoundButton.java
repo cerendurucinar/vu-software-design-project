@@ -2,7 +2,7 @@ package drum.src.ui;
 
 
 import drum.src.sound.Sound;
-import drum.src.drumsequencer.Drum_Sequence;
+import drum.src.drumsequencer.DrumSequence;
 import javafx.animation.ScaleTransition;
 import javafx.scene.control.Button;
 import javafx.util.Duration;
@@ -65,13 +65,13 @@ public class SoundButton extends AbstractButton {
             scaleTransition.play();
             button.setStyle("-fx-background-color: lightblue;");
             this.setIsTriggered(false);
-            Drum_Sequence.updateSequence(getRow(),getColumn(),false);
+            DrumSequence.updateSequence(getRow(),getColumn(),false);
         } else {
             scaleTransition.setRate(1);
             scaleTransition.play();
             this.setIsTriggered(true);
             button.setStyle("-fx-background-color: #0e6f8d;");
-            Drum_Sequence.updateSequence(getRow(),getColumn(),true);
+            DrumSequence.updateSequence(getRow(),getColumn(),true);
         }
     }
 }

@@ -1,6 +1,6 @@
 package drum.src;
-import drum.src.drumsequencer.Drum_Sequence;
-import drum.src.drumsequencer.Drum_Sequencer;
+import drum.src.drumsequencer.DrumSequence;
+import drum.src.drumsequencer.DrumSequencer;
 import drum.src.sound.Sound;
 import drum.src.ui.ClearButton;
 import drum.src.ui.PlayButton;
@@ -34,8 +34,8 @@ public class Deneme extends Application {
             primaryStage.setTitle("Deneme");
 
             try {
-                Drum_Sequencer.synthesizer = MidiSystem.getSynthesizer();
-                Drum_Sequencer.synthesizer.open();
+                DrumSequencer.synthesizer = MidiSystem.getSynthesizer();
+                DrumSequencer.synthesizer.open();
             } catch (MidiUnavailableException e) {
                 e.printStackTrace();
                 Platform.exit();
@@ -61,8 +61,8 @@ public class Deneme extends Application {
                 soundButtonList.add(rowList); // initializing the matrix of SoundButtons
             }
 
-            Drum_Sequencer seq = new Drum_Sequencer(false, true, soundButtonList);
-            Drum_Sequence sequence = new Drum_Sequence(curSeq, seq);
+            DrumSequencer seq = new DrumSequencer(false, true, soundButtonList);
+            DrumSequence sequence = new DrumSequence(curSeq, seq);
             PlayButton playButton = new PlayButton("Play", seq);
             ClearButton clearButton= new ClearButton("Clear", seq);
             RandomButton randomButton = new RandomButton("Random", sequence);
@@ -99,8 +99,8 @@ public class Deneme extends Application {
         }
 
         public void stop(Synthesizer synthesizer) {
-            if (Drum_Sequencer.synthesizer != null && Drum_Sequencer.synthesizer.isOpen()) {
-                Drum_Sequencer.synthesizer.close();
+            if (DrumSequencer.synthesizer != null && DrumSequencer.synthesizer.isOpen()) {
+                DrumSequencer.synthesizer.close();
             }
         }
 

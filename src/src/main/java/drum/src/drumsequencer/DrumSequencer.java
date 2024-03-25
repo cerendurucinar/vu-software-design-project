@@ -13,7 +13,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import javax.sound.midi.Sequence;
 
-public class Drum_Sequencer { // TODO:rename
+public class DrumSequencer { // TODO:rename
     // TODO: check Singleton
     private boolean isOn;
     private boolean isClear;
@@ -28,7 +28,7 @@ public class Drum_Sequencer { // TODO:rename
 
 
 
-    public Drum_Sequencer(boolean isOn, boolean isClear, List<List<SoundButton>> soundButtonList) {
+    public DrumSequencer(boolean isOn, boolean isClear, List<List<SoundButton>> soundButtonList) {
         this.isOn = isOn;
         this.isClear = isClear;
         this.soundButtonList = soundButtonList;
@@ -155,8 +155,8 @@ public class Drum_Sequencer { // TODO:rename
     }
 
     public void shutdown() {
-        if (Drum_Sequencer.synthesizer != null && Drum_Sequencer.synthesizer.isOpen()) {
-            Drum_Sequencer.synthesizer.close();
+        if (DrumSequencer.synthesizer != null && DrumSequencer.synthesizer.isOpen()) {
+            DrumSequencer.synthesizer.close();
         }
         if (!scheduler.isShutdown()) {
             scheduler.shutdown();

@@ -1,13 +1,13 @@
 package drum.src.ui;
 
-import drum.src.drumsequencer.Drum_Sequencer;
+import drum.src.drumsequencer.DrumSequencer;
 import javafx.scene.control.Button;
 
 
 public  class PlayButton extends AbstractButton {
         private Button button;
-        private Drum_Sequencer seq;
-        public PlayButton(String buttonText, Drum_Sequencer seq) {
+        private DrumSequencer seq;
+        public PlayButton(String buttonText, DrumSequencer seq) {
             this.button = new Button(buttonText);
             this.button.setOnAction(e -> onClick());
             this.seq = seq;

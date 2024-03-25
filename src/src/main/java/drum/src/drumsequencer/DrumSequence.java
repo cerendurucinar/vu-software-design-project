@@ -5,11 +5,11 @@ import drum.src.ui.SoundButton;
 import java.util.List;
 import java.util.Random;
 
-public class Drum_Sequence {
+public class DrumSequence {
     private static List<String> currentSequence;
-    private Drum_Sequencer drum_seq;
+    private DrumSequencer drum_seq;
 
-    public Drum_Sequence(List<String> currentSequence, Drum_Sequencer drum_sequencer) {
+    public DrumSequence(List<String> currentSequence, DrumSequencer drum_sequencer) {
         this.currentSequence = currentSequence;
         this.drum_seq = drum_sequencer;
     }
