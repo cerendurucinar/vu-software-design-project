@@ -61,7 +61,8 @@ public class Deneme extends Application {
                 soundButtonList.add(rowList); // initializing the matrix of SoundButtons
             }
 
-            DrumSequencer seq = new DrumSequencer(false, true, soundButtonList);
+            DrumSequencer seq = DrumSequencer.getInstance();
+            seq.setSoundButtonList(soundButtonList);
             DrumSequence sequence = new DrumSequence(curSeq, seq);
             PlayButton playButton = new PlayButton("Play", seq);
             ClearButton clearButton= new ClearButton("Clear", seq);
