@@ -20,18 +20,23 @@ public class DrumSequencer { // TODO:rename
     private List<List<SoundButton>> soundButtonList = new ArrayList<>();
     public static Synthesizer synthesizer;
 
-    MidiChannel[] channels = synthesizer.getChannels();
 
     private ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(10);
 
+    private static DrumSequencer instance = new DrumSequencer(false, true);
+
+    public static DrumSequencer getInstance(){
+        return instance;
+    }
 
 
+    public void setSoundButtonList(List<List<SoundButton>> soundButtonList) {
+        this.soundButtonList = soundButtonList;
+    }
 
-
-    public DrumSequencer(boolean isOn, boolean isClear, List<List<SoundButton>> soundButtonList) {
+    private DrumSequencer(boolean isOn, boolean isClear) {
         this.isOn = isOn;
         this.isClear = isClear;
-        this.soundButtonList = soundButtonList;
     }
 
     public void play(){
@@ -79,38 +84,7 @@ public class DrumSequencer { // TODO:rename
 
     }
 
-    private void playMidiSounds(List<String> filePaths) {
 
-
-        if (synthesizer != null) {
-            MidiChannel channel = channels[0];
-
-            try {
-                for (String fileName : filePaths) {
-                    File file = new File("src/src/main/java/drum/src/" + fileName);
-                    if (!file.exists()) {
-                        System.err.println("File not found: " + fileName);
-                        continue;
-                    }
-
-                    javax.sound.midi.Sequence sequence = MidiSystem.getSequence(file);
-
-                    Sequencer sequencer = MidiSystem.getSequencer();
-                    sequencer.open();
-                    sequencer.setSequence(sequence);
-                    sequencer.start();
-
-                    while (sequencer.isRunning()) {
-                        Thread.sleep(1000);
-                    }
-
-                    sequencer.close();
-                }
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        }
-    }
 
     public void playMidiFile(List<String> filePaths) { // think of patterns
         try {
