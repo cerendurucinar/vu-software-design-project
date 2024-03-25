@@ -83,6 +83,7 @@ public class Deneme extends Application {
                     String btn_name = "Button " + (row * numCols + col + 1);
                     Sound sound = new Sound("Sound " + (row * numCols + col + 1), "Sound"+String.valueOf(row)+".mid");
                     SoundButton sbtn = new SoundButton(btn_name, sound, row, col);
+                    sbtn.setObserver(sequence);
                     soundButtonList.get(row).set(col, sbtn);
                     gridPane.add(sbtn.getBtn(), col, row);
                     col++;
