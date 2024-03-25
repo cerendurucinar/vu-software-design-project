@@ -17,7 +17,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public class Sequencer {
+public class Sequencer { // TODO:rename
+    // TODO: check Singleton
     private boolean isOn;
     private boolean isClear;
     private List<List<SoundButton>> soundButtonList = new ArrayList<>();
@@ -48,21 +49,20 @@ public class Sequencer {
                             notesToPlay.add(soundButtonList.get(r).get(c).getSound().getSoundFile());
                         }
                     }
+
                     for (int r = 0; r < soundButtonList.size(); r++) {
                         Button button = soundButtonList.get(r).get(c).getBtn();
                         button.setScaleX(1.05);
                         button.setScaleY(1.05);
                     }
-
                     playMidiFile(notesToPlay);
 
                     for (int r = 0; r < soundButtonList.size(); r++) {
                         Button button = soundButtonList.get(r).get(c).getBtn();
-                        if(soundButtonList.get(r).get(c).getIsTriggered()){
+                        if (soundButtonList.get(r).get(c).getIsTriggered()) {
                             button.setScaleX(0.98);
                             button.setScaleY(0.98);
-                        }
-                        else{
+                        } else {
                             button.setScaleX(1);
                             button.setScaleY(1);
                         }
@@ -72,7 +72,7 @@ public class Sequencer {
                         if (!isOn) { // to ensure that outer for loop terminates if play button is clicked
                             break;
                         }
-                        Thread.sleep(500);
+                        Thread.sleep(1000);
                     } catch (InterruptedException ex) {
                         ex.printStackTrace();
                     }
@@ -83,7 +83,6 @@ public class Sequencer {
 
     }
 
-
     private void playMidiSounds(List<String> filePaths) {
 
 
@@ -92,7 +91,7 @@ public class Sequencer {
 
             try {
                 for (String fileName : filePaths) {
-                    File file = new File("/Users/cerendurucinar/IdeaProjects/demo5/src/main/java/com/example/demo5/" + fileName);
+                    File file = new File("src/src/main/java/drum/src/" + fileName);
                     if (!file.exists()) {
                         System.err.println("File not found: " + fileName);
                         continue;
@@ -117,10 +116,10 @@ public class Sequencer {
         }
     }
 
-    public void playMidiFile(List<String> filePaths) {
+    public void playMidiFile(List<String> filePaths) { // think of patterns
         try {
             for (String fileName : filePaths) {
-                File file = new File("/Users/cerendurucinar/IdeaProjects/demo5/src/main/java/com/example/demo5/" + fileName);
+                File file = new File("src/src/main/java/drum/src/" + fileName);
                 if (!file.exists()) {
                     System.err.println("File not found: " + fileName);
                     continue;
@@ -135,7 +134,7 @@ public class Sequencer {
                 sequencer.start();
 
                 // Schedule sequencer closure after playback finishes
-                scheduler.schedule(new Runnable() {
+                scheduler.schedule(new Runnable() { // create a seperate class for this
                     @Override
                     public void run() {
                         while (sequencer.isRunning()) {
@@ -147,8 +146,6 @@ public class Sequencer {
                         }
                         sequencer.close();
                     }
-
-
                 }, 0, TimeUnit.SECONDS);
 
             }

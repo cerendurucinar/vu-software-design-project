@@ -6,7 +6,7 @@ import javax.sound.midi.Soundbank;
 import java.util.List;
 import java.util.Random;
 
-public class Sequence {
+public class Sequence { // TODO:rename
     private static List<String> currentSequence;
     private Sequencer sequencer;
 
@@ -29,7 +29,7 @@ public class Sequence {
         }
     }
 
-    public static void updateSequence(int row, int col, boolean triggerState){
+    public static void updateSequence(int row, int col, boolean triggerState){ // TODO: check this
         char charToReplace = '-';
         if(triggerState){
            charToReplace = '+';
