@@ -1,18 +1,13 @@
 package drum.src.ui;
 
-import drum.src.sequencer.Sequencer;
+import drum.src.drumsequencer.Drum_Sequencer;
 import javafx.scene.control.Button;
 
-import javax.sound.midi.MidiChannel;
-import java.util.ArrayList;
-import java.util.List;
 
-
-
-    public  class PlayButton extends AbstractButton {
+public  class PlayButton extends AbstractButton {
         private Button button;
-        private Sequencer seq;
-        public PlayButton(String buttonText, Sequencer seq) {
+        private Drum_Sequencer seq;
+        public PlayButton(String buttonText, Drum_Sequencer seq) {
             this.button = new Button(buttonText);
             this.button.setOnAction(e -> onClick());
             this.seq = seq;

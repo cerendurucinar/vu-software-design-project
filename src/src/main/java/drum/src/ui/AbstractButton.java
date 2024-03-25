@@ -1,10 +1,10 @@
 package drum.src.ui;
 
-import drum.src.sequencer.Sequencer;
+import drum.src.drumsequencer.Drum_Sequencer;
 
 public abstract class AbstractButton {
     boolean isTriggered = false;
-    Sequencer seq;
+    Drum_Sequencer seq;
 
     public abstract void onClick();
 
