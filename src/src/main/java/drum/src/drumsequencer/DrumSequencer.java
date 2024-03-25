@@ -1,23 +1,19 @@
-package drum.src.sequencer;
+package drum.src.drumsequencer;
 
 import drum.src.ui.SoundButton;
-import drum.src.sound.Sound;
-import javafx.animation.ScaleTransition;
 import javafx.scene.control.Button;
-import javafx.util.Duration;
 
 import javax.sound.midi.*;
-import javax.sound.midi.Sequence;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import javax.sound.midi.Sequence;
 
-public class Sequencer { // TODO:rename
+public class DrumSequencer { // TODO:rename
     // TODO: check Singleton
     private boolean isOn;
     private boolean isClear;
@@ -32,7 +28,7 @@ public class Sequencer { // TODO:rename
 
 
 
-    public Sequencer(boolean isOn, boolean isClear, List<List<SoundButton>> soundButtonList) {
+    public DrumSequencer(boolean isOn, boolean isClear, List<List<SoundButton>> soundButtonList) {
         this.isOn = isOn;
         this.isClear = isClear;
         this.soundButtonList = soundButtonList;
@@ -102,7 +98,7 @@ public class Sequencer { // TODO:rename
 
                     javax.sound.midi.Sequence sequence = MidiSystem.getSequence(file);
 
-                    javax.sound.midi.Sequencer sequencer = MidiSystem.getSequencer();
+                    Sequencer sequencer = MidiSystem.getSequencer();
                     sequencer.open();
                     sequencer.setSequence(sequence);
                     sequencer.start();
@@ -128,9 +124,9 @@ public class Sequencer { // TODO:rename
                     continue;
                 }
 
-                javax.sound.midi.Sequence sequence = MidiSystem.getSequence(file);
+                Sequence sequence = MidiSystem.getSequence(file);
 
-                javax.sound.midi.Sequencer sequencer = MidiSystem.getSequencer();
+                Sequencer sequencer = MidiSystem.getSequencer();
 
                 sequencer.open();
                 sequencer.setSequence(sequence);
@@ -162,8 +158,8 @@ public class Sequencer { // TODO:rename
     }
 
     public void shutdown() {
-        if (Sequencer.synthesizer != null && Sequencer.synthesizer.isOpen()) {
-            Sequencer.synthesizer.close();
+        if (DrumSequencer.synthesizer != null && DrumSequencer.synthesizer.isOpen()) {
+            DrumSequencer.synthesizer.close();
         }
         if (!scheduler.isShutdown()) {
             scheduler.shutdown();

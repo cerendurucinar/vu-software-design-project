@@ -1,25 +1,21 @@
 package drum.src;
-import drum.src.sequencer.Sequence;
-import drum.src.sequencer.Sequencer;
+import drum.src.drumsequencer.DrumSequence;
+import drum.src.drumsequencer.DrumSequencer;
 import drum.src.sound.Sound;
 import drum.src.ui.ClearButton;
 import drum.src.ui.PlayButton;
 import drum.src.ui.RandomButton;
 import drum.src.ui.SoundButton;
-import javafx.animation.ScaleTransition;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
-import javax.sound.midi.MidiChannel;
 import javax.sound.midi.MidiSystem;
 import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Synthesizer;
@@ -38,8 +34,8 @@ public class Deneme extends Application {
             primaryStage.setTitle("Deneme");
 
             try {
-                Sequencer.synthesizer = MidiSystem.getSynthesizer();
-                Sequencer.synthesizer.open();
+                DrumSequencer.synthesizer = MidiSystem.getSynthesizer();
+                DrumSequencer.synthesizer.open();
             } catch (MidiUnavailableException e) {
                 e.printStackTrace();
                 Platform.exit();
@@ -65,10 +61,10 @@ public class Deneme extends Application {
                 soundButtonList.add(rowList); // initializing the matrix of SoundButtons
             }
 
-            Sequencer sequencer = new Sequencer(false, true, soundButtonList);
-            Sequence sequence = new Sequence(curSeq, sequencer);
-            PlayButton playButton = new PlayButton("Play", sequencer);
-            ClearButton clearButton= new ClearButton("Clear", sequencer);
+            DrumSequencer seq = new DrumSequencer(false, true, soundButtonList);
+            DrumSequence sequence = new DrumSequence(curSeq, seq);
+            PlayButton playButton = new PlayButton("Play", seq);
+            ClearButton clearButton= new ClearButton("Clear", seq);
             RandomButton randomButton = new RandomButton("Random", sequence);
             HBox buttonBox = new HBox(playButton.getFxButton(), clearButton.getFxButton(), randomButton.getFxButton());
 
@@ -104,8 +100,8 @@ public class Deneme extends Application {
         }
 
         public void stop(Synthesizer synthesizer) {
-            if (Sequencer.synthesizer != null && Sequencer.synthesizer.isOpen()) {
-            Sequencer.synthesizer.close();
+            if (DrumSequencer.synthesizer != null && DrumSequencer.synthesizer.isOpen()) {
+                DrumSequencer.synthesizer.close();
             }
         }
 
