@@ -45,8 +45,11 @@ public class Sequencer { // TODO:rename
 
                     List<String> notesToPlay = new ArrayList<>();
                     for (int r = 0; r < soundButtonList.size(); r++) {
+
                         if (soundButtonList.get(r).get(c).getIsTriggered()) {
-                            notesToPlay.add(soundButtonList.get(r).get(c).getSound().getSoundFile());
+                            Sound sound = soundButtonList.get(r).get(c).getSound();
+                                notesToPlay.add(sound.getSoundFile());
+
                         }
                     }
 
@@ -119,7 +122,7 @@ public class Sequencer { // TODO:rename
     public void playMidiFile(List<String> filePaths) { // think of patterns
         try {
             for (String fileName : filePaths) {
-                File file = new File("src/src/main/java/drum/src/" + fileName);
+                File file = new File( fileName);
                 if (!file.exists()) {
                     System.err.println("File not found: " + fileName);
                     continue;

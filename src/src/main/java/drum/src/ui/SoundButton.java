@@ -3,6 +3,7 @@ package drum.src.ui;
 
 import drum.src.sound.Sound;
 import drum.src.sequencer.Sequence;
+import drum.src.sound.SoundFactory;
 import javafx.animation.ScaleTransition;
 import javafx.scene.control.Button;
 import javafx.util.Duration;
@@ -13,11 +14,11 @@ public class SoundButton extends AbstractButton {
     private int row;
     private int col;
 
-    private Sound sound;
+    private  Sound sound;
     ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(100), this.button);
-    public SoundButton(String buttonText, Sound sound, int row, int col){
+    public SoundButton(String buttonText, String soundName, int row, int col){
         this.button = new Button(buttonText);
-        this.sound = sound;
+        this.sound = SoundFactory.getSound(soundName); // Use factory
         this.row = row;
         this.col = col;
 
@@ -32,6 +33,8 @@ public class SoundButton extends AbstractButton {
         scaleTransition.setToY(0.98);
         scaleTransition.setAutoReverse(true);
     }
+
+
 
 
     public int getRow() {
