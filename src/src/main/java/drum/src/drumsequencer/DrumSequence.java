@@ -1,12 +1,13 @@
 package drum.src.drumsequencer;
 
+import drum.src.observer.Observer;
 import drum.src.ui.SoundButton;
 
 import java.util.List;
 import java.util.Random;
 
-public class DrumSequence {
-    private static List<String> currentSequence;
+public class DrumSequence implements Observer {
+    private  List<String> currentSequence;
     private DrumSequencer drum_seq;
 
     public DrumSequence(List<String> currentSequence, DrumSequencer drum_sequencer) {
@@ -28,15 +29,15 @@ public class DrumSequence {
         }
     }
 
-    public static void updateSequence(int row, int col, boolean triggerState){ // TODO: check this
+    @Override
+    public void update(int row, int col, boolean triggerState) {
         char charToReplace = '-';
         if(triggerState){
-           charToReplace = '+';
+            charToReplace = '+';
         }
         String currentString = currentSequence.get(row);
         StringBuilder modifiedString = new StringBuilder(currentString);
         modifiedString.setCharAt(col, charToReplace);
         currentSequence.set(row, modifiedString.toString());
-        
     }
 }

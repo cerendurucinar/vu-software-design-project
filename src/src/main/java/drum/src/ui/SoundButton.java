@@ -1,6 +1,7 @@
 package drum.src.ui;
 
 
+import drum.src.observer.Subject;
 import drum.src.sound.Sound;
 import drum.src.drumsequencer.DrumSequence;
 import drum.src.sound.SoundFactory;
@@ -9,12 +10,14 @@ import javafx.scene.control.Button;
 import javafx.util.Duration;
 
 
-public class SoundButton extends AbstractButton {
+public class SoundButton extends AbstractButton implements Subject<DrumSequence> {
     private Button button;
     private int row;
     private int col;
 
-    private  Sound sound;
+    private Sound sound;
+    private DrumSequence observer;
+
     ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(100), this.button);
     public SoundButton(String buttonText, String soundName, int row, int col){
         this.button = new Button(buttonText);
@@ -68,13 +71,23 @@ public class SoundButton extends AbstractButton {
             scaleTransition.play();
             button.setStyle("-fx-background-color: lightblue;");
             this.setIsTriggered(false);
-            DrumSequence.updateSequence(getRow(),getColumn(),false);
+            notifyObserver();
         } else {
             scaleTransition.setRate(1);
             scaleTransition.play();
             this.setIsTriggered(true);
             button.setStyle("-fx-background-color: #0e6f8d;");
-            DrumSequence.updateSequence(getRow(),getColumn(),true);
+            notifyObserver();
         }
+    }
+
+    @Override
+    public void setObserver(DrumSequence observer) {
+        this.observer = observer;
+    }
+
+    @Override
+    public void notifyObserver() {
+        observer.update(getRow(), getColumn(), true);
     }
 }
