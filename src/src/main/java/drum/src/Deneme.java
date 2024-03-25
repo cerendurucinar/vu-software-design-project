@@ -83,7 +83,7 @@ public class Deneme extends Application {
                 List<SoundButton> rowList = rowIterator.next();
                 Iterator<SoundButton> colIterator = rowList.iterator();
                 int col = 0;
-                while (colIterator.hasNext() && col < numCols) {
+                while (colIterator.hasNext() && col < numCols) { // check this
                     String btn_name = "Button " + (row * numCols + col + 1);
                     Sound sound = new Sound("Sound " + (row * numCols + col + 1), "Sound"+String.valueOf(row)+".mid");
                     SoundButton sbtn = new SoundButton(btn_name, sound, row, col);
