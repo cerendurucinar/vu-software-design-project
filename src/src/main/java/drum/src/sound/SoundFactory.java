@@ -1,6 +1,6 @@
 package drum.src.sound;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+
 public class SoundFactory {
 
     private static final Map<String, Sound> sounds = new HashMap<>();
@@ -19,6 +19,17 @@ public class SoundFactory {
     public static Sound getSound(String soundName) {
         return sounds.get(soundName);
     }
+
+    public static void addSound(String soundName, String soundFile) {
+        sounds.putIfAbsent(soundName, new Sound(soundName, soundFile));
+    }
+    public static Iterator<String> getSoundNamesIterator() {
+        return sounds.keySet().iterator();
+    }
+    public static Set<String> getAllSoundNames() {
+        return Collections.unmodifiableSet(sounds.keySet());
+    }
+
 
 
 

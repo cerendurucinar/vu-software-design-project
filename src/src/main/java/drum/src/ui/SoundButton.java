@@ -38,7 +38,10 @@ public class SoundButton extends AbstractButton implements Subject<DrumSequence>
     }
 
 
-
+public void setSound(Sound newSound){
+    this.sound = newSound;
+   // button.setText(newSound.getSoundName());
+}
 
     public int getRow() {
         return row;
@@ -91,3 +94,4 @@ public class SoundButton extends AbstractButton implements Subject<DrumSequence>
         observer.update(getRow(), getColumn(), true);
     }
 }
+
