@@ -28,15 +28,14 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 import javax.sound.midi.MidiSystem;
 import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Synthesizer;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.io.*;
+import java.util.*;
 
 
 public class Deneme extends Application {
@@ -83,8 +82,6 @@ public class Deneme extends Application {
         }
     }
 
-
-
     private void setupChangeSoundButtons(GridPane gridPane, ChangeSoundButton changeSoundButton) {
         for (int row = 0; row < NUM_ROWS; row++) {
             ComboBox<String> soundSelector = new ComboBox<>();
@@ -110,18 +107,19 @@ public class Deneme extends Application {
 
     private HBox setupControlButtons(Stage primaryStage) {
 
-
         PlayButton playButton = new PlayButton("Play", seq);
         ClearButton clearButton= new ClearButton("Clear", seq);
         RandomButton randomButton = new RandomButton("Random", sequence);
         SaveSequenceButton saveButton = new SaveSequenceButton("Save Sequence", sequence);
         Button velButton = new Button("Change Velocities");
         Button durButton = new Button("Change Durations");
+        Button selectSeqButton = new Button("Select Sequence");
         velButton.setOnAction( e-> showVelocityAdjustmentDialog(primaryStage));
         durButton.setOnAction(e -> showDurationAdjustmentDialog(primaryStage));
+        selectSeqButton.setOnAction(e -> onSelectSequenceClick(primaryStage));
         ComboBox<String> timesignaturecombobox = seq.createTimeSignature();
 
-         buttonBox = new HBox(playButton.getFxButton(), clearButton.getFxButton(), randomButton.getFxButton(), velButton, durButton, timesignaturecombobox, saveButton.getFxButton());
+         buttonBox = new HBox(playButton.getFxButton(), clearButton.getFxButton(), randomButton.getFxButton(), velButton, durButton, timesignaturecombobox, saveButton.getFxButton(), selectSeqButton);
 
 
         buttonBox.setAlignment(Pos.CENTER);
@@ -131,8 +129,6 @@ public class Deneme extends Application {
 
 
     }
-
-
 
     private GridPane setupGridPane(Stage primaryStage) {
         GridPane gridPane = new GridPane();
@@ -284,10 +280,74 @@ public class Deneme extends Application {
         vbox.getChildren().add(addSoundBtn);
     }
 
+    public void onSelectSequenceClick(Window owner) {
+        Alert alert = new Alert(Alert.AlertType.NONE);
+        alert.initModality(Modality.APPLICATION_MODAL);
+        alert.initOwner(owner);
+        alert.setTitle("Select Sequence");
+
+        ComboBox<String> seqOptions = new ComboBox<>();
+        Set<String> sequenceSet = new HashSet<String>();
+        String filePath = "src/src/main/resources/drum/src/data/data.txt"; // Specify the path to your text file
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            int counter = 1;
+            while ((line = reader.readLine()) != null) {
+                if(line == "\n"){
+                    continue;
+                }
+                sequenceSet.add("Sequence " + String.valueOf(counter));
+                counter++;
+            }
+        } catch (IOException e) {
+            System.err.println("Error reading file: " + e.getMessage());
+        }
+        seqOptions.getItems().addAll(sequenceSet);
 
 
-        public static void main(String[] args) {
-             launch(args);
+        seqOptions.valueProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal != null) {
+                DrumSequencer seq = DrumSequencer.getInstance();
+                List<List<SoundButton>> sbtnList = seq.getSoundButtonList();
+                int selectedVal = Integer.parseInt(seqOptions.getValue().substring(9));
+
+                try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+                    String line;
+                    int counter = 1;
+                    while ((line = reader.readLine()) != null) {
+                        if (counter == selectedVal) {
+                            for (int row = 0; row < sbtnList.size(); row++){
+                                for (int col = 0; col < sbtnList.get(row).size(); col++){
+                                    SoundButton sb = sbtnList.get(row).get(col);
+                                    int idx = 6*row+col;
+                                    if((line.charAt(idx) == '+' && !sb.getIsTriggered()) || (line.charAt(idx) == '-' && sb.getIsTriggered())) {
+                                        sb.onClick();
+                                    }
+                                }
+                            }
+                            break;
+                        }
+                        counter++;
+                    }
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+
+            }
+            });
+
+        VBox content = new VBox(seqOptions);
+
+        alert.getDialogPane().setContent(content);
+        alert.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+        alert.showAndWait();
+
+    }
+
+
+    public static void main(String[] args) {
+            launch(args);
         }
 
 }
