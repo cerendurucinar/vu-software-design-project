@@ -2,8 +2,9 @@ package drum.src.sound;
 
 public class Sound implements SoundController{
     private String soundName;
-    private String soundFile;
     private int velocity = 50;
+    private String soundFile;
+
     public Sound(String soundName, String soundFile){
         this.soundFile = soundFile;
         this.soundName = soundName;
