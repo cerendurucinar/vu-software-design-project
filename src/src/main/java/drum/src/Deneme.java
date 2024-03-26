@@ -64,7 +64,7 @@ public class Deneme extends Application {
             VBox vbox = setupUI(primaryStage, gridPane);
             setupAddSoundButton(vbox,primaryStage);
 
-       vbox.setAlignment(Pos.CENTER);
+            vbox.setAlignment(Pos.CENTER);
 
 
 
