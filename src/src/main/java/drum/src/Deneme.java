@@ -66,7 +66,7 @@ public class Deneme extends Application {
             setupAddSoundButton(vbox,primaryStage);
             setupRemoveSoundButton(vbox,primaryStage);
 
-       vbox.setAlignment(Pos.CENTER);
+            vbox.setAlignment(Pos.CENTER);
 
 
 
