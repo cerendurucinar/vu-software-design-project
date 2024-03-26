@@ -5,6 +5,7 @@ import drum.src.drumsequencer.DrumSequencer;
 import drum.src.observer.Subject;
 import drum.src.sound.Sound;
 import drum.src.sound.SoundFactory;
+import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -14,6 +15,7 @@ import javafx.stage.Modality;
 import javafx.stage.Window;
 
 import java.util.List;
+import java.util.Optional;
 
 public class ChangeSoundButton extends Button {
     DrumSequencer sequencer = DrumSequencer.getInstance();
@@ -36,21 +38,21 @@ public class ChangeSoundButton extends Button {
         ComboBox<String> soundOptions = new ComboBox<>();
         soundOptions.getItems().addAll(SoundFactory.getAllSoundNames());
 
-
-        soundOptions.valueProperty().addListener((obs, oldVal, newVal) -> {
-            if (newVal != null) {
-                changeRowSound(row, newVal);
-                //alert.close(); // Close the dialog after selection
-            }
-        });
-
         VBox content = new VBox(soundOptions);
-
         alert.getDialogPane().setContent(content);
-        alert.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
-        alert.showAndWait();
+        alert.getDialogPane().getButtonTypes().addAll( ButtonType.OK, ButtonType.CANCEL);
 
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            String selectedSound = soundOptions.getValue();
+            if (selectedSound != null) {
+                // Logic to change the sound for this row
+                changeRowSound(row, selectedSound);
+            }
+        }
     }
+
+
     public void changeRowSound(int row, String newSoundName) {
         // Example: Update the SoundButton's associated Sound in this row
         List<SoundButton> rowButtons = sequencer.getSoundButtonList().get(row);
