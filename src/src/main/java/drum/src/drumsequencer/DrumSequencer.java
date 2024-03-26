@@ -24,7 +24,7 @@ public class DrumSequencer { // TODO:rename
     private boolean isClear;
     private List<List<SoundButton>> soundButtonList = new ArrayList<>();
     public static Synthesizer synthesizer;
-
+    private int sleep = 1000;
 
     private ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(10);
 
@@ -50,12 +50,14 @@ public class DrumSequencer { // TODO:rename
                 for (int c = 0; c < soundButtonList.get(0).size(); c++) {
                     List<Integer> velocities = new ArrayList<>();
                     List<String> notesToPlay = new ArrayList<>();
+                    List<Double> durations = new ArrayList<>();
                     for (int r = 0; r < soundButtonList.size(); r++) {
 
                         if (soundButtonList.get(r).get(c).getIsTriggered()) {
                             Sound sound = soundButtonList.get(r).get(c).getSound();
                                 notesToPlay.add(sound.getSoundFile());
                                 velocities.add(sound.getVelocity());
+                                durations.add(sound.getDuration());
                         }
                     }
 
@@ -64,7 +66,7 @@ public class DrumSequencer { // TODO:rename
                         button.setScaleX(1.05);
                         button.setScaleY(1.05);
                     }
-                    playMidiFile(notesToPlay, velocities);
+                    playMidiFile(notesToPlay, velocities,durations);
 
                     for (int r = 0; r < soundButtonList.size(); r++) {
                         Button button = soundButtonList.get(r).get(c).getBtn();
@@ -94,11 +96,12 @@ public class DrumSequencer { // TODO:rename
 
 
 
-    public void playMidiFile(List<String> filePaths, List<Integer> velocities) { // think of patterns
+    public void playMidiFile(List<String> filePaths, List<Integer> velocities, List<Double> durations) { // think of patterns
         try {
             for (int i = 0; i < filePaths.size(); i++) {
                 String fileName = filePaths.get(i);
                 int velocity = velocities.get(i); // Get the corresponding velocity
+                double duration = durations.get(i);
 
                 File file = new File(fileName);
                 if (!file.exists()) {
@@ -107,7 +110,7 @@ public class DrumSequencer { // TODO:rename
                 }
 
                 Sequence sequence = MidiSystem.getSequence(file);
-                adjustSequenceForVelocity(sequence, velocity);
+                adjustSequenceForVelocityAndDuration(sequence, velocity, duration);
                 Sequencer sequencer = MidiSystem.getSequencer();
 
                 sequencer.open();
@@ -120,7 +123,7 @@ public class DrumSequencer { // TODO:rename
                     public void run() {
                         while (sequencer.isRunning()) {
                             try {
-                                Thread.sleep(1000);
+                                Thread.sleep(sleep);
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
@@ -139,11 +142,8 @@ public class DrumSequencer { // TODO:rename
         }
 
     }
-
-    private void adjustSequenceForVelocity(Sequence sequence, int velocity) {
-        if (sequence == null || velocity < 0 || velocity > 127) {
-            throw new IllegalArgumentException("Invalid sequence or velocity");
-        }
+/*
+    private void adjustSequenceForVelocityAndDuration(Sequence sequence, int velocity) {
 
         // Iterate over each track in the sequence
         for (int trackNumber = 0; trackNumber < sequence.getTracks().length; trackNumber++) {
@@ -170,6 +170,45 @@ public class DrumSequencer { // TODO:rename
             }
         }
     }
+*/
+private void adjustSequenceForVelocityAndDuration(Sequence sequence, int velocity, double durationFactor) {
+
+    // Iterate over each track in the sequence
+    for (int trackNumber = 0; trackNumber < sequence.getTracks().length; trackNumber++) {
+        Track track = sequence.getTracks()[trackNumber];
+
+        // Iterate over each event in the track
+        for (int i = 0; i < track.size(); i++) {
+            MidiEvent event = track.get(i);
+            MidiMessage message = event.getMessage();
+
+            if (message instanceof ShortMessage) {
+                ShortMessage sm = (ShortMessage) message;
+
+                // Check if the message is a Note On message with velocity > 0
+                if (sm.getCommand() == ShortMessage.NOTE_ON && sm.getData2() > 0) {
+                    // Change the velocity
+                    try {
+                        sm.setMessage(sm.getCommand(), sm.getChannel(), sm.getData1(), velocity);
+                        if (durationFactor <= 50){
+                            sleep -= 300;
+                        }
+                        else{
+                            sleep += 300;
+                        }
+                        // Adjust the duration
+                        long tick = event.getTick();
+                        long duration = (long) durationFactor;
+                        event.setTick(tick + duration);
+
+                    } catch (InvalidMidiDataException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+    }
+}
 
     public void shutdown() {
         if (DrumSequencer.synthesizer != null && DrumSequencer.synthesizer.isOpen()) {

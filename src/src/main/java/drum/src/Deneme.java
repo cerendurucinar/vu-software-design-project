@@ -115,15 +115,12 @@ public class Deneme extends Application {
         ClearButton clearButton= new ClearButton("Clear", seq);
         RandomButton randomButton = new RandomButton("Random", sequence);
         Button velButton = new Button("Change Velocities");
+        Button durButton = new Button("Change Durations");
         velButton.setOnAction( e-> showVelocityAdjustmentDialog(primaryStage));
+        durButton.setOnAction(e -> showDurationAdjustmentDialog(primaryStage));
         ComboBox<String> timesignaturecombobox = seq.createTimeSignature();
 
-
-
-
-
-
-         buttonBox = new HBox(playButton.getFxButton(), clearButton.getFxButton(), randomButton.getFxButton(), velButton, timesignaturecombobox);
+         buttonBox = new HBox(playButton.getFxButton(), clearButton.getFxButton(), randomButton.getFxButton(), velButton, durButton, timesignaturecombobox);
 
 
         buttonBox.setAlignment(Pos.CENTER);
@@ -235,6 +232,35 @@ public class Deneme extends Application {
                 s.changeVelocity(((Number) newValue).intValue());
             });
             container.getChildren().add(velocitySlider);
+        }
+
+        dialog.getDialogPane().setContent(container);
+        dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+        dialog.showAndWait();
+    }
+
+    public static void showDurationAdjustmentDialog(Stage owner) { // TODO: CHANGE YOUR SEQUENCE AND CLASS DIAGRAM YOU DO NOT CHECK VELOCITY NOW
+
+        Dialog<Void> dialog = new Dialog<>();
+        dialog.setTitle("Adjust Durations");
+        int numberOfRows = NUM_ROWS;
+        dialog.initOwner(owner); // Set the owner to your primary stage
+        dialog.initModality(Modality.APPLICATION_MODAL); // Make the d
+
+        VBox container = new VBox(10); // 10 is the spacing between elements
+        for (int i = 0; i < numberOfRows; i++) {
+            final int row = i;
+            DrumSequencer seq = DrumSequencer.getInstance();
+            Sound s = seq.getSoundButtonList().get(row).get(0).getSound();
+            Slider durationSlider = new Slider(0, 100, s.getDuration()); // Min, Max, Initial Velocity
+            durationSlider.setShowTickLabels(true);
+            durationSlider.setShowTickMarks(true);
+
+            durationSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
+                // Implement velocity update logic here
+                s.changeDuration(((Number) newValue).intValue());
+            });
+            container.getChildren().add(durationSlider);
         }
 
         dialog.getDialogPane().setContent(container);
