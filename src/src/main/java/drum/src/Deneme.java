@@ -28,8 +28,8 @@ import java.util.List;
 
 public class Deneme extends Application {
     public List<List<SoundButton>> soundButtonList = new ArrayList<>();
-    public static final int numRows = 4;
-    public static final int numCols = 6;
+    public static final int NUM_ROWS = 4;
+    public static final int NUM_COLS = 6;
 
         @Override
         public void start(Stage primaryStage) {
@@ -53,10 +53,10 @@ public class Deneme extends Application {
 
 
             List<String> curSeq = new ArrayList<>();
-            for (int row = 0; row < numRows; row++) {
+            for (int row = 0; row < NUM_ROWS; row++) {
                 List<SoundButton> rowList = new ArrayList<>();
-                curSeq.add("-".repeat(numCols)); // initializing a clear sequence
-                for (int col = 0; col < numCols; col++) {
+                curSeq.add("-".repeat(NUM_COLS)); // initializing a clear sequence
+                for (int col = 0; col < NUM_COLS; col++) {
                     rowList.add(null);
                 }
                 soundButtonList.add(rowList); // initializing the matrix of SoundButtons
@@ -79,12 +79,12 @@ public class Deneme extends Application {
             Iterator<List<SoundButton>> rowIterator = soundButtonList.iterator();
 
             int row = 0;
-            while (rowIterator.hasNext() && row < numRows) {
+            while (rowIterator.hasNext() && row < NUM_ROWS) {
                 List<SoundButton> rowList = rowIterator.next();
                 Iterator<SoundButton> colIterator = rowList.iterator();
                 int col = 0;
-                while (colIterator.hasNext() && col < numCols) { // check this
-                    String btn_name = "Button " + (row * numCols + col + 1);
+                while (colIterator.hasNext() && col < NUM_COLS) { // check this
+                    String btn_name = "Button " + (row * NUM_COLS + col + 1);
 
                    // Sound sound = new Sound("Sound " + (row * numCols + col + 1), "Sound"+String.valueOf(row)+".mid");
                     String name = "Sound"+String.valueOf(row);
@@ -111,11 +111,11 @@ public class Deneme extends Application {
                 DrumSequencer.synthesizer.close();
             }
         }
-    public static void showVelocityAdjustmentDialog(Stage owner) {
+    public static void showVelocityAdjustmentDialog(Stage owner) { // TODO: CHANGE YOUR SEQUENCE AND CLASS DIAGRAM YOU DO NOT CHECK VELOCITY NOW
 
         Dialog<Void> dialog = new Dialog<>();
         dialog.setTitle("Adjust Velocities");
-        int numberOfRows = numRows;
+        int numberOfRows = NUM_ROWS;
         dialog.initOwner(owner); // Set the owner to your primary stage
         dialog.initModality(Modality.APPLICATION_MODAL); // Make the d
 
@@ -130,8 +130,7 @@ public class Deneme extends Application {
 
             velocitySlider.valueProperty().addListener((obs, oldValue, newValue) -> {
                 // Implement velocity update logic here
-
-                s.changeVelocity((Integer) newValue);
+                s.changeVelocity(((Number) newValue).intValue());
             });
             container.getChildren().add(velocitySlider);
         }

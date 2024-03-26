@@ -29,12 +29,12 @@ public class Sound implements SoundController{
         return velocity;
     }
 
-    public void setVelocity(int velocity) {
+    public synchronized void setVelocity(int velocity) {
         this.velocity = velocity;
     }
 
     @Override
-    public void changeVelocity(int velocity) {
+    public synchronized void changeVelocity(int velocity) {
         this.velocity = velocity;
     }
 
