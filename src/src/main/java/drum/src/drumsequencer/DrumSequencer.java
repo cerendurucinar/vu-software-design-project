@@ -3,6 +3,10 @@ package drum.src.drumsequencer;
 import drum.src.sound.Sound;
 import drum.src.ui.SoundButton;
 import javafx.scene.control.Button;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.ComboBox;
+
 
 import javax.sound.midi.*;
 import java.io.File;
@@ -44,14 +48,14 @@ public class DrumSequencer { // TODO:rename
         Thread playThread = new Thread(() -> {
             while (isOn) {
                 for (int c = 0; c < soundButtonList.get(0).size(); c++) {
-
+                    List<Integer> velocities = new ArrayList<>();
                     List<String> notesToPlay = new ArrayList<>();
                     for (int r = 0; r < soundButtonList.size(); r++) {
 
                         if (soundButtonList.get(r).get(c).getIsTriggered()) {
                             Sound sound = soundButtonList.get(r).get(c).getSound();
                                 notesToPlay.add(sound.getSoundFile());
-
+                                velocities.add(sound.getVelocity());
                         }
                     }
 
@@ -60,7 +64,7 @@ public class DrumSequencer { // TODO:rename
                         button.setScaleX(1.05);
                         button.setScaleY(1.05);
                     }
-                    playMidiFile(notesToPlay);
+                    playMidiFile(notesToPlay, velocities);
 
                     for (int r = 0; r < soundButtonList.size(); r++) {
                         Button button = soundButtonList.get(r).get(c).getBtn();
@@ -90,17 +94,20 @@ public class DrumSequencer { // TODO:rename
 
 
 
-    public void playMidiFile(List<String> filePaths) { // think of patterns
+    public void playMidiFile(List<String> filePaths, List<Integer> velocities) { // think of patterns
         try {
-            for (String fileName : filePaths) {
-                File file = new File( fileName);
+            for (int i = 0; i < filePaths.size(); i++) {
+                String fileName = filePaths.get(i);
+                int velocity = velocities.get(i); // Get the corresponding velocity
+
+                File file = new File(fileName);
                 if (!file.exists()) {
                     System.err.println("File not found: " + fileName);
                     continue;
                 }
 
                 Sequence sequence = MidiSystem.getSequence(file);
-
+                adjustSequenceForVelocity(sequence, velocity);
                 Sequencer sequencer = MidiSystem.getSequencer();
 
                 sequencer.open();
@@ -129,6 +136,38 @@ public class DrumSequencer { // TODO:rename
             throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+
+    }
+
+    private void adjustSequenceForVelocity(Sequence sequence, int velocity) {
+        if (sequence == null || velocity < 0 || velocity > 127) {
+            throw new IllegalArgumentException("Invalid sequence or velocity");
+        }
+
+        // Iterate over each track in the sequence
+        for (int trackNumber = 0; trackNumber < sequence.getTracks().length; trackNumber++) {
+            Track track = sequence.getTracks()[trackNumber];
+
+            // Iterate over each event in the track
+            for (int i = 0; i < track.size(); i++) {
+                MidiEvent event = track.get(i);
+                MidiMessage message = event.getMessage();
+
+                if (message instanceof ShortMessage) {
+                    ShortMessage sm = (ShortMessage) message;
+
+                    // Check if the message is a Note On message with velocity > 0
+                    if (sm.getCommand() == ShortMessage.NOTE_ON && sm.getData2() > 0) {
+                        // Change the velocity
+                        try {
+                            sm.setMessage(sm.getCommand(), sm.getChannel(), sm.getData1(), velocity);
+                        } catch (InvalidMidiDataException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -169,4 +208,26 @@ public class DrumSequencer { // TODO:rename
     public List<List<SoundButton>> getSoundButtonList() {
         return soundButtonList;
     }
+
+    public enum TimeSignitureEnum{
+        fourbyfour,
+        eightbysixte
+    }
+
+    public ComboBox<String> createTimeSignature() {
+        ObservableList<String> tempoOptions = FXCollections.observableArrayList("4X4","8X16");
+
+        ComboBox<String> TimeSignatureComboBox = new ComboBox<>(tempoOptions);
+        TimeSignatureComboBox.setValue("4X4"); // Default tempo value
+
+        // Add listener to handle tempo changes
+        TimeSignatureComboBox.setOnAction(event -> {
+            String selectedTempo = TimeSignatureComboBox.getValue();
+            // Handle tempo change, you can adjust the tempo in your implementation
+            System.out.println("Selected Tempo: " + selectedTempo);
+        });
+
+        return TimeSignatureComboBox;
+    }
+
 }
