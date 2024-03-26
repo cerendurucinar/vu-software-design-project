@@ -125,7 +125,6 @@ public class Deneme extends Application {
         durButton.setOnAction(e -> showDurationAdjustmentDialog(primaryStage));
 
         selectSeqButton.setOnAction(e -> onSelectSequenceClick(primaryStage));
-        ComboBox<String> timesignaturecombobox = seq.createTimeSignature();
 
         ComboBox<DrumSequencer.TimeSignatureEnum> timesignaturecombobox = seq.createTimeSignature();
 
