@@ -2,18 +2,19 @@ package drum.src;
 import drum.src.drumsequencer.DrumSequence;
 import drum.src.drumsequencer.DrumSequencer;
 import drum.src.sound.Sound;
-import drum.src.ui.ClearButton;
-import drum.src.ui.PlayButton;
-import drum.src.ui.RandomButton;
-import drum.src.ui.SoundButton;
+import drum.src.ui.*;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.Slider;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import javax.sound.midi.MidiSystem;
@@ -27,7 +28,8 @@ import java.util.List;
 
 public class Deneme extends Application {
     public List<List<SoundButton>> soundButtonList = new ArrayList<>();
-
+    public static final int numRows = 4;
+    public static final int numCols = 6;
 
         @Override
         public void start(Stage primaryStage) {
@@ -48,8 +50,7 @@ public class Deneme extends Application {
             gridPane.setVgap(5);
             gridPane.setAlignment(Pos.CENTER);
 
-            int numRows = 3;
-            int numCols = 6;
+
 
             List<String> curSeq = new ArrayList<>();
             for (int row = 0; row < numRows; row++) {
@@ -67,7 +68,9 @@ public class Deneme extends Application {
             PlayButton playButton = new PlayButton("Play", seq);
             ClearButton clearButton= new ClearButton("Clear", seq);
             RandomButton randomButton = new RandomButton("Random", sequence);
-            HBox buttonBox = new HBox(playButton.getFxButton(), clearButton.getFxButton(), randomButton.getFxButton());
+            Button velButton = new Button("Change Velocities");
+            velButton.setOnAction( e-> showVelocityAdjustmentDialog(primaryStage));
+            HBox buttonBox = new HBox(playButton.getFxButton(), clearButton.getFxButton(), randomButton.getFxButton(), velButton);
 
             buttonBox.setAlignment(Pos.CENTER);
             buttonBox.setSpacing(20);
@@ -108,6 +111,37 @@ public class Deneme extends Application {
                 DrumSequencer.synthesizer.close();
             }
         }
+    public static void showVelocityAdjustmentDialog(Stage owner) {
+
+        Dialog<Void> dialog = new Dialog<>();
+        dialog.setTitle("Adjust Velocities");
+        int numberOfRows = numRows;
+        dialog.initOwner(owner); // Set the owner to your primary stage
+        dialog.initModality(Modality.APPLICATION_MODAL); // Make the d
+
+        VBox container = new VBox(10); // 10 is the spacing between elements
+        for (int i = 0; i < numberOfRows; i++) {
+            final int row = i;
+            DrumSequencer seq = DrumSequencer.getInstance();
+            Sound s = seq.getSoundButtonList().get(row).get(0).getSound();
+            Slider velocitySlider = new Slider(0, 100, s.getVelocity()); // Min, Max, Initial Velocity
+            velocitySlider.setShowTickLabels(true);
+            velocitySlider.setShowTickMarks(true);
+
+            velocitySlider.valueProperty().addListener((obs, oldValue, newValue) -> {
+                // Implement velocity update logic here
+
+                s.changeVelocity((Integer) newValue);
+            });
+            container.getChildren().add(velocitySlider);
+        }
+
+        dialog.getDialogPane().setContent(container);
+        dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+        dialog.showAndWait();
+    }
+
+
 
         public static void main(String[] args) {
              launch(args);
