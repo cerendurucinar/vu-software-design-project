@@ -25,6 +25,7 @@ public class DrumSequencer { // TODO:rename
     private List<List<SoundButton>> soundButtonList = new ArrayList<>();
     public static Synthesizer synthesizer;
     private int sleep = 1000;
+    private int sleepTimeMilliseconds = 1000; // Default sleep time
 
     private ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(10);
 
@@ -83,7 +84,7 @@ public class DrumSequencer { // TODO:rename
                         if (!isOn) { // to ensure that outer for loop terminates if play button is clicked
                             break;
                         }
-                        Thread.sleep(1000);
+                        Thread.sleep(sleepTimeMilliseconds); // Use sleepTimeMilliseconds variable here
                     } catch (InterruptedException ex) {
                         ex.printStackTrace();
                     }
@@ -253,20 +254,48 @@ private void adjustSequenceForVelocityAndDuration(Sequence sequence, int velocit
         eightbysixte
     }
 
-    public ComboBox<String> createTimeSignature() {
-        ObservableList<String> tempoOptions = FXCollections.observableArrayList("4X4","8X16");
+    public enum TimeSignatureEnum {
+        FOUR_BY_FOUR("4X4"),
+        EIGHT_BY_SIXTEEN("8X16");
 
-        ComboBox<String> TimeSignatureComboBox = new ComboBox<>(tempoOptions);
-        TimeSignatureComboBox.setValue("4X4"); // Default tempo value
+        private final String displayName;
 
-        // Add listener to handle tempo changes
-        TimeSignatureComboBox.setOnAction(event -> {
-            String selectedTempo = TimeSignatureComboBox.getValue();
-            // Handle tempo change, you can adjust the tempo in your implementation
-            System.out.println("Selected Tempo: " + selectedTempo);
+        TimeSignatureEnum(String displayName) {
+            this.displayName = displayName;
+        }
+
+        public String getDisplayName() {
+            return displayName;
+        }
+    }
+
+    public ComboBox<TimeSignatureEnum> createTimeSignature() {
+        ObservableList<TimeSignatureEnum> timeSignatureOptions = FXCollections.observableArrayList(
+                TimeSignatureEnum.FOUR_BY_FOUR,
+                TimeSignatureEnum.EIGHT_BY_SIXTEEN
+        );
+
+        ComboBox<TimeSignatureEnum> timeSignatureComboBox = new ComboBox<>(timeSignatureOptions);
+        timeSignatureComboBox.setValue(TimeSignatureEnum.FOUR_BY_FOUR); // Default time signature value
+
+        // Add listener to handle time signature changes
+        timeSignatureComboBox.setOnAction(event -> {
+            TimeSignatureEnum selectedTimeSignature = timeSignatureComboBox.getValue();
+            // Handle time signature change
+            switch (selectedTimeSignature) {
+                case FOUR_BY_FOUR:
+                    sleepTimeMilliseconds = 1000; // Set sleep time to 1000 milliseconds for 4/4 time signature
+                    break;
+                case EIGHT_BY_SIXTEEN:
+                    sleepTimeMilliseconds = 500; // Set sleep time to 500 milliseconds for 8/16 time signature
+                    break;
+                default:
+                    // Handle other time signatures if needed
+            }
+            System.out.println("Selected Time Signature: " + selectedTimeSignature.getDisplayName());
         });
 
-        return TimeSignatureComboBox;
+        return timeSignatureComboBox;
     }
 
 }

@@ -119,7 +119,7 @@ public class Deneme extends Application {
         Button durButton = new Button("Change Durations");
         velButton.setOnAction( e-> showVelocityAdjustmentDialog(primaryStage));
         durButton.setOnAction(e -> showDurationAdjustmentDialog(primaryStage));
-        ComboBox<String> timesignaturecombobox = seq.createTimeSignature();
+        ComboBox<DrumSequencer.TimeSignatureEnum> timesignaturecombobox = seq.createTimeSignature();
 
          buttonBox = new HBox(playButton.getFxButton(), clearButton.getFxButton(), randomButton.getFxButton(), velButton, durButton, timesignaturecombobox, saveButton.getFxButton());
 
