@@ -17,9 +17,10 @@ public class SoundFactory {
         sounds.put("Sound3", new Sound("Sound3", "src/src/main/resources/drum/src/sounds/Sound3.mid"));
     }
 
-    public static Sound getSound(String soundName) {
-        return sounds.get(soundName);
-    }
+
+   public static Sound getSound(String soundName) {
+       return sounds.get(soundName);
+   }
 
     public static void addSound(String soundName, String soundFile) {
         sounds.putIfAbsent(soundName, new Sound(soundName, soundFile));
@@ -30,7 +31,9 @@ public class SoundFactory {
     public static Set<String> getAllSoundNames() {
         return Collections.unmodifiableSet(sounds.keySet());
     }
-
+    public static void removeSound(String soundName) {
+        sounds.remove(soundName);
+    }
 
 
 
