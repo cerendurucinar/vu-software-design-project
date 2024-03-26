@@ -58,8 +58,9 @@ public class Deneme extends Application {
             primaryStage.setTitle("Deneme");
 
             initializeSynthesizer();
-            buttonBox = setupControlButtons(primaryStage);
+
             GridPane gridPane = setupGridPane(primaryStage);
+            buttonBox = setupControlButtons(primaryStage);
             VBox vbox = setupUI(primaryStage, gridPane);
             setupAddSoundButton(vbox,primaryStage);
 
