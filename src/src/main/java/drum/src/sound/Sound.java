@@ -3,7 +3,8 @@ package drum.src.sound;
 public class Sound implements SoundController{
     private String soundName;
     private String soundFile;
-    private int velocity = 20;
+    private int velocity = 50;
+    private double duration = 50;
     public Sound(String soundName, String soundFile){
         this.soundFile = soundFile;
         this.soundName = soundName;
@@ -39,11 +40,20 @@ public class Sound implements SoundController{
     }
 
     @Override
+    public void changeDuration(int duration) {
+        this.duration = duration;
+    }
+
+    @Override
     public boolean checkVelocity(int velocity) {
         boolean retVal = false;
         if (velocity >= 0 && velocity <= 100){
             retVal = true;
         }
         return retVal;
+    }
+
+    public double getDuration() {
+        return duration;
     }
 }
