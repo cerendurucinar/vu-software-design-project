@@ -3,6 +3,10 @@ package drum.src.drumsequencer;
 import drum.src.sound.Sound;
 import drum.src.ui.SoundButton;
 import javafx.scene.control.Button;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.ComboBox;
+
 
 import javax.sound.midi.*;
 import java.io.File;
@@ -204,4 +208,26 @@ public class DrumSequencer { // TODO:rename
     public List<List<SoundButton>> getSoundButtonList() {
         return soundButtonList;
     }
+
+    public enum TimeSignitureEnum{
+        fourbyfour,
+        eightbysixte
+    }
+
+    public ComboBox<String> createTimeSignature() {
+        ObservableList<String> tempoOptions = FXCollections.observableArrayList("4X4","8X16");
+
+        ComboBox<String> TimeSignatureComboBox = new ComboBox<>(tempoOptions);
+        TimeSignatureComboBox.setValue("4X4"); // Default tempo value
+
+        // Add listener to handle tempo changes
+        TimeSignatureComboBox.setOnAction(event -> {
+            String selectedTempo = TimeSignatureComboBox.getValue();
+            // Handle tempo change, you can adjust the tempo in your implementation
+            System.out.println("Selected Tempo: " + selectedTempo);
+        });
+
+        return TimeSignatureComboBox;
+    }
+
 }
