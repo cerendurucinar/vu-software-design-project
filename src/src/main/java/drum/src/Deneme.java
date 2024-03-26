@@ -116,10 +116,10 @@ public class Deneme extends Application {
         Dialog<Void> dialog = new Dialog<>();
         dialog.setTitle("Adjust Velocities");
         int numberOfRows = NUM_ROWS;
-        dialog.initOwner(owner); // Set the owner to your primary stage
-        dialog.initModality(Modality.APPLICATION_MODAL); // Make the d
+        dialog.initOwner(owner);
+        dialog.initModality(Modality.APPLICATION_MODAL);
 
-        VBox container = new VBox(10); // 10 is the spacing between elements
+        VBox container = new VBox(10);
         for (int i = 0; i < numberOfRows; i++) {
             final int row = i;
             DrumSequencer seq = DrumSequencer.getInstance();

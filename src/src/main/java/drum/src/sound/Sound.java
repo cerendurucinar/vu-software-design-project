@@ -3,7 +3,7 @@ package drum.src.sound;
 public class Sound implements SoundController{
     private String soundName;
     private String soundFile;
-    private int velocity = 20;
+    private int velocity = 50;
     public Sound(String soundName, String soundFile){
         this.soundFile = soundFile;
         this.soundName = soundName;
