@@ -37,6 +37,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 
 public class Deneme extends Application {
@@ -58,11 +59,11 @@ public class Deneme extends Application {
             primaryStage.setTitle("Deneme");
 
             initializeSynthesizer();
-
             GridPane gridPane = setupGridPane(primaryStage);
             buttonBox = setupControlButtons(primaryStage);
             VBox vbox = setupUI(primaryStage, gridPane);
             setupAddSoundButton(vbox,primaryStage);
+            setupRemoveSoundButton(vbox,primaryStage);
 
        vbox.setAlignment(Pos.CENTER);
 
@@ -249,12 +250,60 @@ public class Deneme extends Application {
             fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("MIDI Files", "*.mid", "*.midi"));
             File selectedFile = fileChooser.showOpenDialog(primaryStage);
             if (selectedFile != null) {
-                String soundName = selectedFile.getName();
+                String soundName = selectedFile.getName().substring(0, selectedFile.getName().lastIndexOf('.'));
                 String soundFile = selectedFile.getAbsolutePath();
                 SoundFactory.addSound(soundName, soundFile);
             }
         });
         vbox.getChildren().add(addSoundBtn);
+    }
+
+    private void setupRemoveSoundButton(VBox vbox, Stage primaryStage) {
+        Button removeSoundBtn = new Button("-");
+        removeSoundBtn.setOnAction(event -> {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.initModality(Modality.APPLICATION_MODAL);
+            alert.initOwner(primaryStage);
+            alert.setTitle("Remove A Sound");
+            alert.setHeaderText("Select a Sound");
+
+            ComboBox<String> soundOptions = new ComboBox<>();
+            soundOptions.getItems().addAll(SoundFactory.getAllSoundNames());
+
+            VBox content = new VBox(soundOptions);
+            alert.getDialogPane().setContent(content);
+            ButtonType REMOVE_SOUND = new ButtonType("Remove Sound");
+            alert.getButtonTypes().setAll(REMOVE_SOUND, ButtonType.CANCEL);
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isPresent() && result.get() == REMOVE_SOUND) {
+                // Show confirmation dialog for removing sound
+                Alert confirmationDialog = new Alert(Alert.AlertType.CONFIRMATION);
+                confirmationDialog.initModality(Modality.APPLICATION_MODAL);
+                confirmationDialog.initOwner(primaryStage);
+               // confirmationDialog.setTitle("Confirmation Dialog");
+                confirmationDialog.setHeaderText("Remove Sound");
+                confirmationDialog.setContentText("Are you sure you want to remove this sound?");
+
+                Optional<ButtonType> confirmationResult = confirmationDialog.showAndWait();
+                if (confirmationResult.isPresent() && confirmationResult.get() == ButtonType.OK) {
+                    String selectedSound = soundOptions.getValue();
+
+                    // Perform the logic to remove the selected sound
+                    SoundFactory.removeSound(selectedSound);
+
+                    // Close the dialogs after removing the sound
+                    confirmationDialog.close();
+                    alert.close();
+                }
+            }
+        });
+
+
+
+
+
+        vbox.getChildren().add(removeSoundBtn);
     }
 
 
