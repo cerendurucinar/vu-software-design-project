@@ -69,8 +69,9 @@ public class Deneme extends Application {
             ClearButton clearButton= new ClearButton("Clear", seq);
             RandomButton randomButton = new RandomButton("Random", sequence);
             Button velButton = new Button("Change Velocities");
+            ComboBox<String> timesignaturecombobox = seq.createTimeSignature();
             velButton.setOnAction( e-> showVelocityAdjustmentDialog(primaryStage));
-            HBox buttonBox = new HBox(playButton.getFxButton(), clearButton.getFxButton(), randomButton.getFxButton(), velButton);
+            HBox buttonBox = new HBox(playButton.getFxButton(), clearButton.getFxButton(), randomButton.getFxButton(), velButton, timesignaturecombobox);
 
             buttonBox.setAlignment(Pos.CENTER);
             buttonBox.setSpacing(20);
@@ -99,6 +100,7 @@ public class Deneme extends Application {
             }
 
             VBox vbox = new VBox(buttonBox, gridPane);
+            vbox.getChildren().add(timesignaturecombobox);
             vbox.setAlignment(Pos.CENTER);
             Scene scene = new Scene(vbox, 300, 200);
             primaryStage.setScene(scene);
