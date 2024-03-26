@@ -113,20 +113,16 @@ public class Deneme extends Application {
         PlayButton playButton = new PlayButton("Play", seq);
         ClearButton clearButton= new ClearButton("Clear", seq);
         RandomButton randomButton = new RandomButton("Random", sequence);
+        Button velButton = new Button("Change Velocities");
+        velButton.setOnAction( e-> showVelocityAdjustmentDialog(primaryStage));
+        ComboBox<String> timesignaturecombobox = seq.createTimeSignature();
 
 
-        buttonBox = new HBox(playButton.getFxButton(), clearButton.getFxButton(), randomButton.getFxButton());
 
-            DrumSequencer seq = DrumSequencer.getInstance();
-            seq.setSoundButtonList(soundButtonList);
-            DrumSequence sequence = new DrumSequence(curSeq, seq);
-            PlayButton playButton = new PlayButton("Play", seq);
-            ClearButton clearButton= new ClearButton("Clear", seq);
-            RandomButton randomButton = new RandomButton("Random", sequence);
-            Button velButton = new Button("Change Velocities");
-            ComboBox<String> timesignaturecombobox = seq.createTimeSignature();
-            velButton.setOnAction( e-> showVelocityAdjustmentDialog(primaryStage));
-            HBox buttonBox = new HBox(playButton.getFxButton(), clearButton.getFxButton(), randomButton.getFxButton(), velButton, timesignaturecombobox);
+
+
+
+         buttonBox = new HBox(playButton.getFxButton(), clearButton.getFxButton(), randomButton.getFxButton(), velButton, timesignaturecombobox);
 
 
         buttonBox.setAlignment(Pos.CENTER);
@@ -243,6 +239,21 @@ public class Deneme extends Application {
         dialog.getDialogPane().setContent(container);
         dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
         dialog.showAndWait();
+    }
+    private void setupAddSoundButton(VBox vbox, Stage primaryStage) {
+        Button addSoundBtn = new Button("+");
+        addSoundBtn.setOnAction(e -> {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Select MIDI Sound File");
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("MIDI Files", "*.mid", "*.midi"));
+            File selectedFile = fileChooser.showOpenDialog(primaryStage);
+            if (selectedFile != null) {
+                String soundName = selectedFile.getName();
+                String soundFile = selectedFile.getAbsolutePath();
+                SoundFactory.addSound(soundName, soundFile);
+            }
+        });
+        vbox.getChildren().add(addSoundBtn);
     }
 
 
