@@ -3,6 +3,9 @@ package drum.src.drumsequencer;
 import drum.src.observer.Observer;
 import drum.src.ui.SoundButton;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 
@@ -40,4 +43,20 @@ public class DrumSequence implements Observer {
         modifiedString.setCharAt(col, charToReplace);
         currentSequence.set(row, modifiedString.toString());
     }
+
+    public void saveSequence(){
+        String fileName = "src/src/main/resources/drum/src/data/data.txt"; // Name of the text file to write to
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
+            // Write data to the file
+            for (int i = 0; i < currentSequence.size(); i++){
+                String row = currentSequence.get(i);
+                writer.write(row);
+            }
+            writer.write("\n");
+        } catch (IOException e) {
+            System.err.println("Error writing to file: " + e.getMessage());
+        }
+    }
+
 }

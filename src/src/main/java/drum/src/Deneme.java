@@ -114,13 +114,14 @@ public class Deneme extends Application {
         PlayButton playButton = new PlayButton("Play", seq);
         ClearButton clearButton= new ClearButton("Clear", seq);
         RandomButton randomButton = new RandomButton("Random", sequence);
+        SaveSequenceButton saveButton = new SaveSequenceButton("Save Sequence", sequence);
         Button velButton = new Button("Change Velocities");
         Button durButton = new Button("Change Durations");
         velButton.setOnAction( e-> showVelocityAdjustmentDialog(primaryStage));
         durButton.setOnAction(e -> showDurationAdjustmentDialog(primaryStage));
         ComboBox<String> timesignaturecombobox = seq.createTimeSignature();
 
-         buttonBox = new HBox(playButton.getFxButton(), clearButton.getFxButton(), randomButton.getFxButton(), velButton, durButton, timesignaturecombobox);
+         buttonBox = new HBox(playButton.getFxButton(), clearButton.getFxButton(), randomButton.getFxButton(), velButton, durButton, timesignaturecombobox, saveButton.getFxButton());
 
 
         buttonBox.setAlignment(Pos.CENTER);
