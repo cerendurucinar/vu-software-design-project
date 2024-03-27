@@ -13,6 +13,19 @@ public class ChangeDurationCommand implements Command{
         this.row = row;
         this.newDuration = newDuration;
     }
+    public ChangeDurationCommand() {
+        this.sequencer = DrumSequencer.getInstance();
+
+    }
+
+    public void setRow(int row) {
+        this.row = row;
+    }
+
+    public void setNewDuration(int newDuration) {
+        this.newDuration = newDuration;
+    }
+
     @Override
     public void execute() {
         Sound sound = sequencer.getSoundButtonList().get(row).get(0).getSound();
