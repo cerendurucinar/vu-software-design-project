@@ -5,7 +5,7 @@ import drum.src.ui.SoundButton;
 
 import java.util.List;
 
-public class Sound implements SoundController{
+public class Sound {
     private String soundName;
     private String soundFile;
     private int velocity = 50;
@@ -29,13 +29,9 @@ public class Sound implements SoundController{
         return velocity;
     }
 
-
-    @Override
     public synchronized void changeVelocity(int velocity) {
         this.velocity = velocity;
     }
-
-    @Override
     public void changeDuration(int duration) {
         this.duration = duration;
     }
