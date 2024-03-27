@@ -1,10 +1,9 @@
 package drum.src.ui;
 
 
-import drum.src.observer.Subject;
-import drum.src.sound.Sound;
-import drum.src.drumsequencer.DrumSequence;
-import drum.src.sound.SoundFactory;
+import drum.src.observer.*;
+import drum.src.sound.*;
+import drum.src.drumsequencer.*;
 import javafx.animation.ScaleTransition;
 import javafx.scene.control.Button;
 import javafx.util.Duration;

@@ -1,15 +1,9 @@
 package drum.src.ui;
 
-import drum.src.drumsequencer.DrumSequence;
-import drum.src.drumsequencer.DrumSequencer;
-import drum.src.observer.Subject;
-import drum.src.sound.Sound;
+import drum.src.drumsequencer.*;
+import drum.src.sound.*;
 import drum.src.sound.SoundFactory;
-import javafx.event.ActionEvent;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Window;

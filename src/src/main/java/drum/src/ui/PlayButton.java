@@ -1,8 +1,7 @@
 package drum.src.ui;
 
-import drum.src.drumsequencer.DrumSequencer;
+import drum.src.drumsequencer.*;
 import javafx.scene.control.Button;
-
 
 public  class PlayButton extends StateButton{
         //private Button button;

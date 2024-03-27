@@ -1,8 +1,7 @@
 package drum.src.drumsequencer;
 
-import drum.src.observer.Observer;
+import drum.src.observer.*;
 import drum.src.ui.SoundButton;
-
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;

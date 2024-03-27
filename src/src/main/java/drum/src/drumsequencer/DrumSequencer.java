@@ -7,16 +7,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
 
-
 import javax.sound.midi.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-import javax.sound.midi.Sequence;
+import java.util.*;
+import java.util.concurrent.*;
 
 public class DrumSequencer { // TODO:rename
     // TODO: check Singleton
