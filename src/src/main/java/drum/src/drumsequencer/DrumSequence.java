@@ -5,6 +5,7 @@ import drum.src.ui.SoundButton;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -24,14 +25,26 @@ public class DrumSequence implements Observer {
         List<List<SoundButton>> sbtnList = drum_seq.getSoundButtonList();
         Random rand = new Random();
         drum_seq.clearSequence(); // first make sure that all SoundButtons are in notTriggered state
-        for (int r = 0; r < sbtnList.size(); r++){
-            for (int c = 0; c < sbtnList.get(r).size(); c++){
+        Iterator<List<SoundButton>> rowIterator = sbtnList.iterator();
+        while(rowIterator.hasNext()){
+            Iterator<SoundButton> colIterator = rowIterator.next().iterator();
+            while(colIterator.hasNext()){
+                SoundButton button = colIterator.next();
                 boolean randVal = rand.nextBoolean(); // getting a random bool value to randomly determine if a button is clicked or not
                 if(randVal){
-                    sbtnList.get(r).get(c).onClick();
+                    button.onClick();
                 }
+
             }
         }
+//        for (int r = 0; r < sbtnList.size(); r++){
+//            for (int c = 0; c < sbtnList.get(r).size(); c++){
+//                boolean randVal = rand.nextBoolean(); // getting a random bool value to randomly determine if a button is clicked or not
+//                if(randVal){
+//                    sbtnList.get(r).get(c).onClick();
+//                }
+//            }
+//        }
     }
 
     @Override
@@ -49,8 +62,9 @@ public class DrumSequence implements Observer {
     public void saveSequence(){
         String fileName = "src/src/main/resources/drum/src/data/data.txt"; // this is the path of the file that contains our preset or saved sequences
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true))) {
-            for (int i = 0; i < currentSequence.size(); i++){
-                String row = currentSequence.get(i);
+            Iterator<String> seqIterator = currentSequence.iterator();
+            while(seqIterator.hasNext()){
+                String row = seqIterator.next();
                 writer.write(row);
             }
             writer.write("\n");
