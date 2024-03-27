@@ -5,7 +5,7 @@ import drum.src.drumsequencer.DrumSequencer;
 import javafx.scene.control.Button;
 
 public class SaveSequenceButton extends AbstractButton {
-    private Button button;
+    //private Button button;
     private DrumSequence sequence; // update the class diagram if it is like this
 
 

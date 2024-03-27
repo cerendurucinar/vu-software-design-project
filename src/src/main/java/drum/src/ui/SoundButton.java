@@ -11,7 +11,7 @@ import javafx.util.Duration;
 
 
 public class SoundButton extends AbstractButton implements Subject<DrumSequence> {
-    private Button button;
+    //private Button button;
     private int row;
     private int col;
 

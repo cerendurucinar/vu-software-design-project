@@ -6,7 +6,7 @@ import javafx.scene.control.Button;
 
 
 public class RandomButton extends AbstractButton{
-    private Button button;
+    //private Button button;
     private DrumSequence seq; // update the class diagram if it is like this
 
 

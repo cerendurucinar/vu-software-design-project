@@ -3,7 +3,7 @@ package drum.src.ui;
 import drum.src.drumsequencer.DrumSequencer;
 import javafx.scene.control.Button;
 
-public class ClearButton extends AbstractButton {
+public class ClearButton extends StateButton {
 
     private Button button;
     private DrumSequencer seq;
@@ -12,12 +12,11 @@ public class ClearButton extends AbstractButton {
     public ClearButton(String buttonText, DrumSequencer seq) {
         this.button = new Button(buttonText);
         this.button.setOnAction(e -> onClick());
-        this.seq = seq;
+        //this.seq = seq;
     }
 
     @Override
-    public void onClick() {
-        seq.clearSequence();
+    public void onClick() {DrumSequencer.getInstance().clearSequence();
     }
 
     public Button getFxButton() { // Provide access to the JavaFX button for UI integration

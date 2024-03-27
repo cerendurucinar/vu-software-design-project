@@ -135,7 +135,7 @@ public class Deneme extends Application {
         buttonBox.setSpacing(20);
         buttonBox.setPadding(new Insets(40));
         return buttonBox;
-
+        
 
     }
 
@@ -155,7 +155,7 @@ public class Deneme extends Application {
         }
 
         seq.setSoundButtonList(soundButtonList);
-        sequence = new DrumSequence(curSeq, seq);
+        sequence = new DrumSequence(curSeq);
 
         Iterator<List<SoundButton>> rowIterator = soundButtonList.iterator();
 
