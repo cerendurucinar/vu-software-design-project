@@ -1,9 +1,7 @@
 package drum.src.ui;
 
-import drum.src.drumsequencer.DrumSequencer;
+import drum.src.drumsequencer.*;
 import javafx.scene.control.Button;
-
-import java.awt.*;
 
 public abstract class AbstractButton {
     Button button;

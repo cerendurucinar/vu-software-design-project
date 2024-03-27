@@ -1,10 +1,7 @@
 package drum.src.ui;
 
-import drum.src.drumsequencer.DrumSequence;
+import drum.src.drumsequencer.*;
 import javafx.scene.control.Button;
-
-
-
 public class RandomButton extends AbstractButton{
     //private Button button;
     private DrumSequence seq; // update the class diagram if it is like this
