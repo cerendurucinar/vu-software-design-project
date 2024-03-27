@@ -142,14 +142,14 @@ public class Deneme extends Application {
             Iterator<SoundButton> colIterator = rowList.iterator();
             ChangeSoundCommand changeSoundCommand = new ChangeSoundCommand(seq, row);
             ChangeSoundButton changeSoundBtn = new ChangeSoundButton("Change Sound", changeSoundCommand, primaryStage);
-
             gridPane.add(changeSoundBtn, 0, row);
-
             int col = 0;
-            while (colIterator.hasNext() && col < NUM_COLS) {
+            while (colIterator.hasNext()) {
                 String btn_name = "Button" + (row * NUM_COLS + col + 1);
                 String name = "Sound"+String.valueOf(row);
+                SoundButton sbtnIt = colIterator.next();
                 SoundButton sbtn = new SoundButton(btn_name, name , row, col);
+                sbtnIt = sbtn;
                 sbtn.setObserver(sequence);
 
                 soundButtonList.get(row).set(col, sbtn);
