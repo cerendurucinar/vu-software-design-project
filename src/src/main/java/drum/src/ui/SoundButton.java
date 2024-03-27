@@ -10,13 +10,11 @@ import javafx.util.Duration;
 
 
 public class SoundButton extends AbstractButton implements Subject<DrumSequence> {
-    //private Button button;
     private int row;
     private int col;
 
     private Sound sound;
     private DrumSequence observer;
-
     ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(100), this.button);
     public SoundButton(String buttonText, String soundName, int row, int col){
         this.button = new Button(buttonText);

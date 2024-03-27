@@ -24,7 +24,6 @@ public class DialogUI {
         if (buttonTypes.length > 0) {
             alert.getButtonTypes().setAll(buttonTypes);
         } else {
-            // Default to OK if no buttons are specified
             alert.getButtonTypes().setAll(ButtonType.OK);
         }
 

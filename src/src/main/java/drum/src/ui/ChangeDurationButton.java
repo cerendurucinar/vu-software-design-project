@@ -28,7 +28,7 @@ public class ChangeDurationButton extends Button {
     }
 
     public void onClick(Window owner) {
-        VBox container = new VBox(10); // 10 is the spacing between elements
+        VBox container = new VBox(10);
         Map<Integer, Integer> rowAndNewDuration = new HashMap<>();
 
         for (int i = 0; i < Deneme.NUM_ROWS; i++) {
@@ -36,7 +36,7 @@ public class ChangeDurationButton extends Button {
             DrumSequencer seq = DrumSequencer.getInstance();
             Sound s = seq.getSoundButtonList().get(row).get(0).getSound();
 
-            Slider durationSlider = new Slider(0, 100, s.getDuration()); // Min, Max, Initial Velocity
+            Slider durationSlider = new Slider(0, 100, s.getDuration());
             Label label = new Label(DrumSequencer.getInstance().getSoundButtonList().get(row).get(0).getSound().getSoundName());
             durationSlider.setShowTickLabels(true);
             durationSlider.setShowTickMarks(true);
@@ -55,7 +55,6 @@ public class ChangeDurationButton extends Button {
                   rowAndNewDuration.forEach((row, duration) -> {
                      command.setRow(row);
                      command.setNewDuration(duration);
-                    //Command changeDuration = new ChangeDurationCommand(DrumSequencer.getInstance(), row, duration);
                      command.execute();
                 });
             }

@@ -4,15 +4,10 @@ import drum.src.drumsequencer.DrumSequencer;
 import drum.src.sound.Sound;
 
 public class ChangeVelocityCommand implements Command{
-   // private DrumSequencer sequencer;
+   // this class handles changing the velocity of a specific row's sound
     DrumSequencer sequencer;
     private int row;
     private int newVelocity;
-    public ChangeVelocityCommand(int row, int newVelocity) {
-        this.sequencer = DrumSequencer.getInstance();
-        this.row = row;
-        this.newVelocity = newVelocity;
-    }
 
     public ChangeVelocityCommand() {
         this.sequencer = DrumSequencer.getInstance();

@@ -1,16 +1,13 @@
 package drum.src.ui;
 
-import drum.src.command.ChangeDurationCommand;
 import drum.src.command.RemoveSoundCommand;
 import drum.src.drumsequencer.DrumSequencer;
 import drum.src.sound.SoundFactory;
-import drum.src.ui.DialogUI;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import javafx.stage.Window;
 
 import java.util.Optional;
@@ -46,10 +43,8 @@ public class RemoveSoundButton extends Button {
                     String selectedSound = soundOptions.getValue();
                     if (selectedSound != null) {
                         this.command.setSoundName(selectedSound);
-                        this.command.execute(); // Execute the command with the selected sound
+                        this.command.execute();
                     }
-
-
                 }
             }
         }

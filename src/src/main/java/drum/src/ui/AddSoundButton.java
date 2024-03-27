@@ -25,7 +25,7 @@ public class AddSoundButton extends Button {
         File selectedFile = fileChooser.showOpenDialog(owner);
         if (selectedFile != null) {
             this.command.setSelectedFile(selectedFile);
-            this.command.execute(); // Execute the command with the selected sound
+            this.command.execute();
         }
     }
 }

@@ -9,6 +9,9 @@ import java.util.List;
 import java.util.Random;
 
 public class DrumSequence implements Observer {
+    // this class represents a beat sequence. It implements Observer interface
+    // and it is the observer of SoundButton objects. The reason behind that is
+    // updating the currentSequence when a SoundButton is clicked.
     private  List<String> currentSequence;
     private DrumSequencer drum_seq;
 
@@ -20,10 +23,10 @@ public class DrumSequence implements Observer {
     public void createRandomSequence(){
         List<List<SoundButton>> sbtnList = drum_seq.getSoundButtonList();
         Random rand = new Random();
-        drum_seq.clearSequence();
+        drum_seq.clearSequence(); // first make sure that all SoundButtons are in notTriggered state
         for (int r = 0; r < sbtnList.size(); r++){
             for (int c = 0; c < sbtnList.get(r).size(); c++){
-                boolean randVal = rand.nextBoolean();
+                boolean randVal = rand.nextBoolean(); // getting a random bool value to randomly determine if a button is clicked or not
                 if(randVal){
                     sbtnList.get(r).get(c).onClick();
                 }
@@ -44,10 +47,8 @@ public class DrumSequence implements Observer {
     }
 
     public void saveSequence(){
-        String fileName = "src/src/main/resources/drum/src/data/data.txt"; // Name of the text file to write to
-
+        String fileName = "src/src/main/resources/drum/src/data/data.txt"; // this is the path of the file that contains our preset or saved sequences
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true))) {
-            // Write data to the file
             for (int i = 0; i < currentSequence.size(); i++){
                 String row = currentSequence.get(i);
                 writer.write(row);

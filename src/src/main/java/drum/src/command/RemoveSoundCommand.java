@@ -5,6 +5,7 @@ import drum.src.sound.Sound;
 import drum.src.sound.SoundFactory;
 
 public class RemoveSoundCommand implements Command{
+    // this class handles removing a specific sound from the app.
     private String soundName;
 
     public RemoveSoundCommand(String soundName) {
