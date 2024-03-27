@@ -2,6 +2,7 @@ package drum.src.drumsequencer;
 
 import drum.src.sound.Sound;
 import drum.src.ui.SoundButton;
+import javafx.application.Platform;
 import javafx.scene.control.Button;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -63,21 +64,36 @@ public class DrumSequencer { // TODO:rename
                     }
 
                     for (int r = 0; r < soundButtonList.size(); r++) {
-                        Button button = soundButtonList.get(r).get(c).getBtn();
-                        button.setScaleX(1.05);
-                        button.setScaleY(1.05);
+                          Button button = soundButtonList.get(r).get(c).getBtn();
+//                        button.setScaleX(1.05);
+//                        button.setScaleY(1.05);
+                        Platform.runLater(() -> {
+                            button.setScaleX(1.10);
+                            button.setScaleY(1.10);
+                        });
                     }
                     playMidiFile(notesToPlay, velocities,durations);
 
                     for (int r = 0; r < soundButtonList.size(); r++) {
-                        Button button = soundButtonList.get(r).get(c).getBtn();
-                        if (soundButtonList.get(r).get(c).getIsTriggered()) {
-                            button.setScaleX(0.98);
-                            button.setScaleY(0.98);
-                        } else {
-                            button.setScaleX(1);
-                            button.setScaleY(1);
-                        }
+                          Button button = soundButtonList.get(r).get(c).getBtn();
+//                        if (soundButtonList.get(r).get(c).getIsTriggered()) {
+//                            button.setScaleX(0.98);
+//                            button.setScaleY(0.98);
+//                        } else {
+//                            button.setScaleX(1);
+//                            button.setScaleY(1);
+//                        }
+                        int finalR = r;
+                        int finalC = c;
+                        Platform.runLater(() -> {
+                            if (soundButtonList.get(finalR).get(finalC).getIsTriggered()) {
+                                button.setScaleX(0.98);
+                                button.setScaleY(0.98);
+                            } else {
+                                button.setScaleX(1);
+                                button.setScaleY(1);
+                            }
+                        });
 
                     }
                     try {
@@ -143,35 +159,7 @@ public class DrumSequencer { // TODO:rename
         }
 
     }
-/*
-    private void adjustSequenceForVelocityAndDuration(Sequence sequence, int velocity) {
 
-        // Iterate over each track in the sequence
-        for (int trackNumber = 0; trackNumber < sequence.getTracks().length; trackNumber++) {
-            Track track = sequence.getTracks()[trackNumber];
-
-            // Iterate over each event in the track
-            for (int i = 0; i < track.size(); i++) {
-                MidiEvent event = track.get(i);
-                MidiMessage message = event.getMessage();
-
-                if (message instanceof ShortMessage) {
-                    ShortMessage sm = (ShortMessage) message;
-
-                    // Check if the message is a Note On message with velocity > 0
-                    if (sm.getCommand() == ShortMessage.NOTE_ON && sm.getData2() > 0) {
-                        // Change the velocity
-                        try {
-                            sm.setMessage(sm.getCommand(), sm.getChannel(), sm.getData1(), velocity);
-                        } catch (InvalidMidiDataException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            }
-        }
-    }
-*/
 private void adjustSequenceForVelocityAndDuration(Sequence sequence, int velocity, double durationFactor) {
 
     // Iterate over each track in the sequence
