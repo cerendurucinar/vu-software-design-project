@@ -2,6 +2,7 @@ package drum.src.drumsequencer;
 
 import drum.src.sound.Sound;
 import drum.src.ui.SoundButton;
+import javafx.application.Platform;
 import javafx.scene.control.Button;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -57,21 +58,36 @@ public class DrumSequencer {
                     }
 
                     for (int r = 0; r < soundButtonList.size(); r++) {
-                        Button button = soundButtonList.get(r).get(c).getBtn();
-                        button.setScaleX(1.05);
-                        button.setScaleY(1.05);
+                          Button button = soundButtonList.get(r).get(c).getBtn();
+//                        button.setScaleX(1.05);
+//                        button.setScaleY(1.05);
+                        Platform.runLater(() -> {
+                            button.setScaleX(1.10);
+                            button.setScaleY(1.10);
+                        });
                     }
                     playMidiFile(notesToPlay, velocities,durations);
 
                     for (int r = 0; r < soundButtonList.size(); r++) {
-                        Button button = soundButtonList.get(r).get(c).getBtn();
-                        if (soundButtonList.get(r).get(c).getIsTriggered()) {
-                            button.setScaleX(0.98);
-                            button.setScaleY(0.98);
-                        } else {
-                            button.setScaleX(1);
-                            button.setScaleY(1);
-                        }
+                          Button button = soundButtonList.get(r).get(c).getBtn();
+//                        if (soundButtonList.get(r).get(c).getIsTriggered()) {
+//                            button.setScaleX(0.98);
+//                            button.setScaleY(0.98);
+//                        } else {
+//                            button.setScaleX(1);
+//                            button.setScaleY(1);
+//                        }
+                        int finalR = r;
+                        int finalC = c;
+                        Platform.runLater(() -> {
+                            if (soundButtonList.get(finalR).get(finalC).getIsTriggered()) {
+                                button.setScaleX(0.98);
+                                button.setScaleY(0.98);
+                            } else {
+                                button.setScaleX(1);
+                                button.setScaleY(1);
+                            }
+                        });
 
                     }
                     try {
