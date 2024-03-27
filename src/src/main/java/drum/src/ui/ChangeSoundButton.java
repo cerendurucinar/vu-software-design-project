@@ -1,18 +1,10 @@
 package drum.src.ui;
 
 import drum.src.command.ChangeSoundCommand;
-import drum.src.command.Command;
-import drum.src.drumsequencer.DrumSequence;
-import drum.src.drumsequencer.DrumSequencer;
-import drum.src.observer.Subject;
-import drum.src.sound.Sound;
 import drum.src.sound.SoundFactory;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
 import javafx.stage.Window;
-
-import java.util.List;
 import java.util.Optional;
 
 
@@ -20,7 +12,7 @@ public class ChangeSoundButton extends Button {
     private ChangeSoundCommand command;
 
     public ChangeSoundButton(String buttonText, ChangeSoundCommand command, Window owner) {
-        super(buttonText); // Use "super" to set the button text, leveraging inheritance
+        super(buttonText);
         this.command = command;
         this.setOnAction(e -> onClick(owner));
     }
@@ -34,7 +26,7 @@ public class ChangeSoundButton extends Button {
             String selectedSound = soundOptions.getValue();
             if (selectedSound != null) {
                 this.command.setNewSoundName(selectedSound);
-                this.command.execute(); // Execute the command with the selected sound
+                this.command.execute();
             }
         }
     }

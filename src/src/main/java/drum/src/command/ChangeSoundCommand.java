@@ -7,38 +7,10 @@ import drum.src.ui.SoundButton;
 
 import java.util.List;
 
-//public class ChangeSoundCommand implements Command{
-//    private SoundFactory soundFactory;
-//    private int row;
-//    private String newSoundName;
-//
-//    public ChangeSoundCommand(SoundFactory soundFactory, int row, String newSoundName) {
-//        this.soundFactory = soundFactory;
-//        this.row = row;
-//        this.newSoundName = newSoundName;
-//    }
-//
-//    public void setSoundFactory(SoundFactory soundFactory) {
-//        this.soundFactory = soundFactory;
-//    }
-//
-//    public void setRow(int row) {
-//        this.row = row;
-//    }
-//
-//    public void setNewSoundName(String newSoundName) {
-//        this.newSoundName = newSoundName;
-//    }
-//
-//    @Override
-//    public void execute() {
-//        soundFactory.changeRowSound(row,newSoundName);
-//    }
-//}
 public class ChangeSoundCommand implements Command {
     private DrumSequencer sequencer;
     private int row;
-    private String newSoundName; // This will be set later
+    private String newSoundName;
 
     public ChangeSoundCommand(DrumSequencer sequencer, int row) {
         this.sequencer = sequencer;
@@ -52,7 +24,6 @@ public class ChangeSoundCommand implements Command {
     @Override
     public void execute() {
         if (newSoundName != null) {
-            // Place your logic to change the sound here
             List<SoundButton> rowButtons = sequencer.getSoundButtonList().get(row);
             for (SoundButton button : rowButtons) {
                 button.getBtn().setText(newSoundName);

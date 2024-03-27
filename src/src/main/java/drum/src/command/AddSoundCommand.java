@@ -1,10 +1,10 @@
 package drum.src.command;
 
 import drum.src.sound.SoundFactory;
-
 import java.io.File;
 
 public class AddSoundCommand implements Command {
+    // this class handles adding a sound to the app.
     private File selectedFile;
 
     public AddSoundCommand(File selectedFile) {

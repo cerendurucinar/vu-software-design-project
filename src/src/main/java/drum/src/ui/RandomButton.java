@@ -3,10 +3,7 @@ package drum.src.ui;
 import drum.src.drumsequencer.*;
 import javafx.scene.control.Button;
 public class RandomButton extends AbstractButton{
-    //private Button button;
-    private DrumSequence seq; // update the class diagram if it is like this
-
-
+    private DrumSequence seq;
     public RandomButton(String buttonText, DrumSequence seq) {
         this.button = new Button(buttonText);
         this.button.setOnAction(e -> onClick());

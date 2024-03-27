@@ -13,18 +13,18 @@ import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.*;
 
-public class DrumSequencer { // TODO:rename
-    // TODO: check Singleton
+public class DrumSequencer {
+    // This class handles the playing and stopping the beat logic. The class is designed with Singleton
+    // pattern because we want our DrumSequencer to be unique to not have some conflicts when playing.
     private boolean isOn;
-    private boolean isClear;
     private List<List<SoundButton>> soundButtonList = new ArrayList<>();
     public static Synthesizer synthesizer;
     private int sleep = 1000;
-    private int sleepTimeMilliseconds = 1000; // Default sleep time
+    private int sleepTimeMilliseconds = 1000;
 
     private ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(10);
 
-    private static DrumSequencer instance = new DrumSequencer(false, true);
+    private static DrumSequencer instance = new DrumSequencer(false);
 
     public static DrumSequencer getInstance(){
         return instance;
@@ -35,9 +35,8 @@ public class DrumSequencer { // TODO:rename
         this.soundButtonList = soundButtonList;
     }
 
-    private DrumSequencer(boolean isOn, boolean isClear) {
+    private DrumSequencer(boolean isOn) {
         this.isOn = isOn;
-        this.isClear = isClear;
     }
 
     public void play(){
@@ -79,7 +78,7 @@ public class DrumSequencer { // TODO:rename
                         if (!isOn) { // to ensure that outer for loop terminates if play button is clicked
                             break;
                         }
-                        Thread.sleep(sleepTimeMilliseconds); // Use sleepTimeMilliseconds variable here
+                        Thread.sleep(sleepTimeMilliseconds);
                     } catch (InterruptedException ex) {
                         ex.printStackTrace();
                     }
@@ -92,11 +91,11 @@ public class DrumSequencer { // TODO:rename
 
 
 
-    public void playMidiFile(List<String> filePaths, List<Integer> velocities, List<Double> durations) { // think of patterns
+    public void playMidiFile(List<String> filePaths, List<Integer> velocities, List<Double> durations) {
         try {
             for (int i = 0; i < filePaths.size(); i++) {
                 String fileName = filePaths.get(i);
-                int velocity = velocities.get(i); // Get the corresponding velocity
+                int velocity = velocities.get(i);
                 double duration = durations.get(i);
 
                 File file = new File(fileName);
@@ -113,8 +112,7 @@ public class DrumSequencer { // TODO:rename
                 sequencer.setSequence(sequence);
                 sequencer.start();
 
-                // Schedule sequencer closure after playback finishes
-                scheduler.schedule(new Runnable() { // create a seperate class for this
+                scheduler.schedule(new Runnable() {
                     @Override
                     public void run() {
                         while (sequencer.isRunning()) {
@@ -138,42 +136,12 @@ public class DrumSequencer { // TODO:rename
         }
 
     }
-/*
-    private void adjustSequenceForVelocityAndDuration(Sequence sequence, int velocity) {
 
-        // Iterate over each track in the sequence
-        for (int trackNumber = 0; trackNumber < sequence.getTracks().length; trackNumber++) {
-            Track track = sequence.getTracks()[trackNumber];
-
-            // Iterate over each event in the track
-            for (int i = 0; i < track.size(); i++) {
-                MidiEvent event = track.get(i);
-                MidiMessage message = event.getMessage();
-
-                if (message instanceof ShortMessage) {
-                    ShortMessage sm = (ShortMessage) message;
-
-                    // Check if the message is a Note On message with velocity > 0
-                    if (sm.getCommand() == ShortMessage.NOTE_ON && sm.getData2() > 0) {
-                        // Change the velocity
-                        try {
-                            sm.setMessage(sm.getCommand(), sm.getChannel(), sm.getData1(), velocity);
-                        } catch (InvalidMidiDataException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            }
-        }
-    }
-*/
 private void adjustSequenceForVelocityAndDuration(Sequence sequence, int velocity, double durationFactor) {
 
-    // Iterate over each track in the sequence
     for (int trackNumber = 0; trackNumber < sequence.getTracks().length; trackNumber++) {
         Track track = sequence.getTracks()[trackNumber];
 
-        // Iterate over each event in the track
         for (int i = 0; i < track.size(); i++) {
             MidiEvent event = track.get(i);
             MidiMessage message = event.getMessage();
@@ -181,9 +149,7 @@ private void adjustSequenceForVelocityAndDuration(Sequence sequence, int velocit
             if (message instanceof ShortMessage) {
                 ShortMessage sm = (ShortMessage) message;
 
-                // Check if the message is a Note On message with velocity > 0
                 if (sm.getCommand() == ShortMessage.NOTE_ON && sm.getData2() > 0) {
-                    // Change the velocity
                     try {
                         sm.setMessage(sm.getCommand(), sm.getChannel(), sm.getData1(), velocity);
                         if (durationFactor <= 50){
@@ -192,11 +158,9 @@ private void adjustSequenceForVelocityAndDuration(Sequence sequence, int velocit
                         else{
                             sleep += 300;
                         }
-                        // Adjust the duration
                         long tick = event.getTick();
                         long duration = (long) durationFactor;
                         event.setTick(tick + duration);
-
                     } catch (InvalidMidiDataException e) {
                         e.printStackTrace();
                     }
@@ -206,14 +170,6 @@ private void adjustSequenceForVelocityAndDuration(Sequence sequence, int velocit
     }
 }
 
-    public void shutdown() {
-        if (DrumSequencer.synthesizer != null && DrumSequencer.synthesizer.isOpen()) {
-            DrumSequencer.synthesizer.close();
-        }
-        if (!scheduler.isShutdown()) {
-            scheduler.shutdown();
-        }
-    }
     public void clearSequence(){
         for(int r = 0; r<soundButtonList.size(); r++){
             for(int c = 0; c<soundButtonList.get(r).size(); c++){
@@ -228,25 +184,13 @@ private void adjustSequenceForVelocityAndDuration(Sequence sequence, int velocit
         isOn = on;
     }
 
-    public void setClear(boolean clear) {
-        isClear = clear;
-    }
-
     public boolean isOn() {
         return isOn;
     }
 
-    public boolean isClear() {
-        return isClear;
-    }
 
     public List<List<SoundButton>> getSoundButtonList() {
         return soundButtonList;
-    }
-
-    public enum TimeSignitureEnum{
-        fourbyfour,
-        eightbysixte
     }
 
     public enum TimeSignatureEnum {
@@ -271,21 +215,20 @@ private void adjustSequenceForVelocityAndDuration(Sequence sequence, int velocit
         );
 
         ComboBox<TimeSignatureEnum> timeSignatureComboBox = new ComboBox<>(timeSignatureOptions);
-        timeSignatureComboBox.setValue(TimeSignatureEnum.FOUR_BY_FOUR); // Default time signature value
+        timeSignatureComboBox.setValue(TimeSignatureEnum.FOUR_BY_FOUR);
 
-        // Add listener to handle time signature changes
         timeSignatureComboBox.setOnAction(event -> {
             TimeSignatureEnum selectedTimeSignature = timeSignatureComboBox.getValue();
-            // Handle time signature change
+
             switch (selectedTimeSignature) {
                 case FOUR_BY_FOUR:
-                    sleepTimeMilliseconds = 1000; // Set sleep time to 1000 milliseconds for 4/4 time signature
+                    sleepTimeMilliseconds = 1000;
                     break;
                 case EIGHT_BY_SIXTEEN:
-                    sleepTimeMilliseconds = 500; // Set sleep time to 500 milliseconds for 8/16 time signature
+                    sleepTimeMilliseconds = 500;
                     break;
                 default:
-                    // Handle other time signatures if needed
+
             }
             System.out.println("Selected Time Signature: " + selectedTimeSignature.getDisplayName());
         });

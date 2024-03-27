@@ -1,7 +1,6 @@
 package drum.src.ui;
 
 import drum.src.Deneme;
-import drum.src.command.ChangeSoundCommand;
 import drum.src.command.ChangeVelocityCommand;
 import drum.src.drumsequencer.DrumSequencer;
 import javafx.scene.control.*;
@@ -10,7 +9,6 @@ import javafx.stage.Window;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 
 public class ChangeVelocityButton extends Button {

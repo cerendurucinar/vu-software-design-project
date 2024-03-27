@@ -4,7 +4,6 @@ import drum.src.drumsequencer.*;
 import javafx.scene.control.Button;
 
 public  class PlayButton extends StateButton{
-        //private Button button;
         private DrumSequencer seq;
         public PlayButton(String buttonText, DrumSequencer seq) {
             this.button = new Button(buttonText);

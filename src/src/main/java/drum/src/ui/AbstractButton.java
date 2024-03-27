@@ -10,8 +10,6 @@ public abstract class AbstractButton {
 
     public abstract void onClick();
 
-
-
     public boolean getIsTriggered() {
         return isTriggered;
     }
