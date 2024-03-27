@@ -137,7 +137,7 @@ public class Deneme extends Application {
         Iterator<List<SoundButton>> rowIterator = soundButtonList.iterator();
 
         int row = 0;
-        while (rowIterator.hasNext() && row < NUM_ROWS) {
+        while (rowIterator.hasNext()) {
             List<SoundButton> rowList = rowIterator.next();
             Iterator<SoundButton> colIterator = rowList.iterator();
             ChangeSoundCommand changeSoundCommand = new ChangeSoundCommand(seq, row);

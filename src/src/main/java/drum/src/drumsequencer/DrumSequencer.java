@@ -187,13 +187,18 @@ private void adjustSequenceForVelocityAndDuration(Sequence sequence, int velocit
 }
 
     public void clearSequence(){
-        for(int r = 0; r<soundButtonList.size(); r++){
-            for(int c = 0; c<soundButtonList.get(r).size(); c++){
-                if (soundButtonList.get(r).get(c).getIsTriggered()) {
-                    soundButtonList.get(r).get(c).onClick();
+        Iterator<List<SoundButton>> rowIterator = soundButtonList.iterator();
+        while(rowIterator.hasNext()){
+            List<SoundButton> sbtnList = rowIterator.next();
+            Iterator<SoundButton> colIterator = sbtnList.iterator();
+            while(colIterator.hasNext()){
+                SoundButton sbtn = colIterator.next();
+                if (sbtn.getIsTriggered()) {
+                    sbtn.onClick();
                 }
             }
         }
+
     }
 
     public  void setOn(boolean on) {
