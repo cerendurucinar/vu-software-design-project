@@ -1,5 +1,10 @@
 package drum.src.sound;
 
+import drum.src.drumsequencer.DrumSequencer;
+import drum.src.ui.SoundButton;
+
+import java.util.List;
+
 public class Sound implements SoundController{
     private String soundName;
     private String soundFile;
@@ -56,4 +61,8 @@ public class Sound implements SoundController{
     public double getDuration() {
         return duration;
     }
+
+
+
 }
+

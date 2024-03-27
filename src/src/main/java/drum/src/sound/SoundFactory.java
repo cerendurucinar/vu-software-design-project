@@ -1,4 +1,6 @@
 package drum.src.sound;
+import drum.src.ui.SoundButton;
+
 import java.util.*;
 
 public class SoundFactory {
@@ -34,7 +36,6 @@ public class SoundFactory {
     public static void removeSound(String soundName) {
         sounds.remove(soundName);
     }
-
 
 
 
