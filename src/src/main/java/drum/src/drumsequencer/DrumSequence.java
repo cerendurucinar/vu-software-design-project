@@ -13,9 +13,9 @@ public class DrumSequence implements Observer {
     private  List<String> currentSequence;
     private DrumSequencer drum_seq;
 
-    public DrumSequence(List<String> currentSequence, DrumSequencer drum_sequencer) {
+    public DrumSequence(List<String> currentSequence) {
         this.currentSequence = currentSequence;
-        this.drum_seq = drum_sequencer;
+        this.drum_seq = DrumSequencer.getInstance();
     }
 
     public void createRandomSequence(){

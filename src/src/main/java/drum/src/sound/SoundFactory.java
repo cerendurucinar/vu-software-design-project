@@ -27,9 +27,6 @@ public class SoundFactory {
     public static void addSound(String soundName, String soundFile) {
         sounds.putIfAbsent(soundName, new Sound(soundName, soundFile));
     }
-    public static Iterator<String> getSoundNamesIterator() {
-        return sounds.keySet().iterator();
-    }
     public static Set<String> getAllSoundNames() {
         return Collections.unmodifiableSet(sounds.keySet());
     }

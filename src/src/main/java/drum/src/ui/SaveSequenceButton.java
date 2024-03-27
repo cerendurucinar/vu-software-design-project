@@ -6,7 +6,7 @@ import javafx.scene.control.Button;
 import javafx.stage.Window;
 
 public class SaveSequenceButton extends AbstractButton {
-    private Button button;
+    //private Button button;
     private DrumSequence sequence; // update the class diagram if it is like this
 
 
