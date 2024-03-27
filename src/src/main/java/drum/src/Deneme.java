@@ -1,4 +1,5 @@
 package drum.src;
+import drum.src.command.*;
 import drum.src.drumsequencer.DrumSequence;
 import drum.src.drumsequencer.DrumSequencer;
 import drum.src.sound.Sound;
@@ -52,6 +53,11 @@ public class Deneme extends Application {
 
 
 
+
+
+
+
+
   
 
         @Override
@@ -87,21 +93,21 @@ public class Deneme extends Application {
 
 
 
-    private void setupChangeSoundButtons(GridPane gridPane, ChangeSoundButton changeSoundButton) {
-        for (int row = 0; row < NUM_ROWS; row++) {
-            ComboBox<String> soundSelector = new ComboBox<>();
-            soundSelector.getItems().addAll(SoundFactory.getAllSoundNames());
-
-            int finalRow = row;
-            soundSelector.valueProperty().addListener((obs, oldVal, newSoundName) -> {
-                // Logic to change the sound for this row
-                changeSoundButton.changeRowSound(finalRow, newSoundName);
-            });
-            gridPane.add(changeSoundButton.getButton(), 0, row);
-            //gridPane.add(new Label("Change Sound:"), 0, row);
-            gridPane.add(soundSelector, 1, row); // Adjust column index as needed
-        }
-    }
+//    private void setupChangeSoundButtons(GridPane gridPane, ChangeSoundButton changeSoundButton) {
+//        for (int row = 0; row < NUM_ROWS; row++) {
+//            ComboBox<String> soundSelector = new ComboBox<>();
+//            soundSelector.getItems().addAll(SoundFactory.getAllSoundNames());
+//
+//            int finalRow = row;
+//            soundSelector.valueProperty().addListener((obs, oldVal, newSoundName) -> {
+//                // Logic to change the sound for this row
+//                changeSoundButton.changeRowSound(finalRow, newSoundName);
+//            });
+//            gridPane.add(changeSoundButton.getButton(), 0, row);
+//            //gridPane.add(new Label("Change Sound:"), 0, row);
+//            gridPane.add(soundSelector, 1, row); // Adjust column index as needed
+//        }
+//    }
 
     private VBox setupUI(Stage primaryStage, GridPane gridPane) {
 
@@ -160,9 +166,14 @@ public class Deneme extends Application {
             while (rowIterator.hasNext() && row < NUM_ROWS) {
                 List<SoundButton> rowList = rowIterator.next();
                 Iterator<SoundButton> colIterator = rowList.iterator();
-                ChangeSoundButton changeSoundBtn = new ChangeSoundButton("Change Sound",seq,row,primaryStage);
-                //buttonBox.getChildren().add(changeSoundBtn);
-                gridPane.add(changeSoundBtn.getButton(), 0, row);
+                // Create the command for changing sound in this row
+                ChangeSoundCommand changeSoundCommand = new ChangeSoundCommand(seq, row);
+
+                // Create the button that allows changing the sound, passing the command
+                ChangeSoundButton changeSoundBtn = new ChangeSoundButton("Change Sound", changeSoundCommand, primaryStage);
+
+                gridPane.add(changeSoundBtn, 0, row); // Directly add ChangeSoundButton to the grid
+
                 int col = 0;
                 while (colIterator.hasNext() && col < NUM_COLS) { // check this
 
@@ -189,19 +200,19 @@ public class Deneme extends Application {
     }
 
 
-    private void setupSoundButtons(GridPane gridPane, Stage primaryStage) {
-        for (int row = 0; row < NUM_ROWS; row++) {
-            List<SoundButton> rowList = new ArrayList<>();
-            ChangeSoundButton changeSoundBtn = new ChangeSoundButton("Change Sound",seq,row,primaryStage);
-            gridPane.add(changeSoundBtn.getButton(), 0, row);
-            for (int col = 0; col < NUM_COLS; col++) {
-                SoundButton sbtn = createSoundButton(row, col);
-                rowList.add(sbtn);
-                gridPane.add(sbtn.getBtn(), col + 1, row); // col+1 to account for the "+" button
-            }
-            soundButtonList.add(rowList);
-        }
-    }
+//    private void setupSoundButtons(GridPane gridPane, Stage primaryStage) {
+//        for (int row = 0; row < NUM_ROWS; row++) {
+//            List<SoundButton> rowList = new ArrayList<>();
+//            ChangeSoundButton changeSoundBtn = new ChangeSoundButton("Change Sound",seq,row,primaryStage);
+//            gridPane.add(changeSoundBtn.getButton(), 0, row);
+//            for (int col = 0; col < NUM_COLS; col++) {
+//                SoundButton sbtn = createSoundButton(row, col);
+//                rowList.add(sbtn);
+//                gridPane.add(sbtn.getBtn(), col + 1, row); // col+1 to account for the "+" button
+//            }
+//            soundButtonList.add(rowList);
+//        }
+//    }
     private SoundButton createSoundButton(int row, int col) {
         String name = "Sound" + row;
         return new SoundButton("Button " + (row * NUM_COLS + col + 1), name, row, col);
@@ -232,7 +243,9 @@ public class Deneme extends Application {
 
             velocitySlider.valueProperty().addListener((obs, oldValue, newValue) -> {
                 // Implement velocity update logic here
-                s.changeVelocity(((Number) newValue).intValue());
+
+                Command changeVelocity = new ChangeVelocityCommand(seq, row, ((Number) newValue).intValue());
+                changeVelocity.execute();
             });
             container.getChildren().add(velocitySlider);
         }
@@ -261,7 +274,8 @@ public class Deneme extends Application {
 
             durationSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
                 // Implement velocity update logic here
-                s.changeDuration(((Number) newValue).intValue());
+                Command changeDuration = new ChangeDurationCommand(seq, row, ((Number) newValue).intValue());
+                changeDuration.execute();
             });
             container.getChildren().add(durationSlider);
         }
@@ -289,40 +303,51 @@ public class Deneme extends Application {
     private void setupRemoveSoundButton(VBox vbox, Stage primaryStage) {
         Button removeSoundBtn = new Button("-");
         removeSoundBtn.setOnAction(event -> {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.initModality(Modality.APPLICATION_MODAL);
-            alert.initOwner(primaryStage);
-            alert.setTitle("Remove A Sound");
-            alert.setHeaderText("Select a Sound");
+            if (seq.isOn()) {
+                // Inform the user that removal is not allowed during playback
+                Alert playbackAlert = new Alert(Alert.AlertType.WARNING);
+                playbackAlert.initModality(Modality.APPLICATION_MODAL);
+                playbackAlert.initOwner(primaryStage);
+                playbackAlert.setTitle("Removal Not Allowed");
+                playbackAlert.setHeaderText("Cannot Remove Sound During Playback");
+                playbackAlert.setContentText("Please stop the sequence before removing a sound.");
+                playbackAlert.showAndWait();
+            }else {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.initModality(Modality.APPLICATION_MODAL);
+                alert.initOwner(primaryStage);
+                alert.setTitle("Remove A Sound");
+                alert.setHeaderText("Select a Sound");
 
-            ComboBox<String> soundOptions = new ComboBox<>();
-            soundOptions.getItems().addAll(SoundFactory.getAllSoundNames());
+                ComboBox<String> soundOptions = new ComboBox<>();
+                soundOptions.getItems().addAll(SoundFactory.getAllSoundNames());
 
-            VBox content = new VBox(soundOptions);
-            alert.getDialogPane().setContent(content);
-            ButtonType REMOVE_SOUND = new ButtonType("Remove Sound");
-            alert.getButtonTypes().setAll(REMOVE_SOUND, ButtonType.CANCEL);
+                VBox content = new VBox(soundOptions);
+                alert.getDialogPane().setContent(content);
+                ButtonType REMOVE_SOUND = new ButtonType("Remove Sound");
+                alert.getButtonTypes().setAll(REMOVE_SOUND, ButtonType.CANCEL);
 
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.isPresent() && result.get() == REMOVE_SOUND) {
-                // Show confirmation dialog for removing sound
-                Alert confirmationDialog = new Alert(Alert.AlertType.CONFIRMATION);
-                confirmationDialog.initModality(Modality.APPLICATION_MODAL);
-                confirmationDialog.initOwner(primaryStage);
-               // confirmationDialog.setTitle("Confirmation Dialog");
-                confirmationDialog.setHeaderText("Remove Sound");
-                confirmationDialog.setContentText("Are you sure you want to remove this sound?");
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.isPresent() && result.get() == REMOVE_SOUND) {
+                    // Show confirmation dialog for removing sound
+                    Alert confirmationDialog = new Alert(Alert.AlertType.CONFIRMATION);
+                    confirmationDialog.initModality(Modality.APPLICATION_MODAL);
+                    confirmationDialog.initOwner(primaryStage);
+                    // confirmationDialog.setTitle("Confirmation Dialog");
+                    confirmationDialog.setHeaderText("Remove Sound");
+                    confirmationDialog.setContentText("Are you sure you want to remove this sound?");
 
-                Optional<ButtonType> confirmationResult = confirmationDialog.showAndWait();
-                if (confirmationResult.isPresent() && confirmationResult.get() == ButtonType.OK) {
-                    String selectedSound = soundOptions.getValue();
+                    Optional<ButtonType> confirmationResult = confirmationDialog.showAndWait();
+                    if (confirmationResult.isPresent() && confirmationResult.get() == ButtonType.OK) {
+                        String selectedSound = soundOptions.getValue();
 
-                    // Perform the logic to remove the selected sound
-                    SoundFactory.removeSound(selectedSound);
-
-                    // Close the dialogs after removing the sound
-                    confirmationDialog.close();
-                    alert.close();
+                        // Create and execute the remove sound command
+                        RemoveSoundCommand removeSoundCommand = new RemoveSoundCommand(selectedSound);
+                        removeSoundCommand.execute();
+                        // Close the dialogs after removing the sound
+                        confirmationDialog.close();
+                        alert.close();
+                    }
                 }
             }
         });

@@ -3,6 +3,7 @@ package drum.src.ui;
 import drum.src.drumsequencer.DrumSequence;
 import drum.src.drumsequencer.DrumSequencer;
 import javafx.scene.control.Button;
+import javafx.stage.Window;
 
 public class SaveSequenceButton extends AbstractButton {
     private Button button;
@@ -19,6 +20,8 @@ public class SaveSequenceButton extends AbstractButton {
     public void onClick() {
         sequence.saveSequence();
     }
+
+
 
     public Button getFxButton() {
         return button;
