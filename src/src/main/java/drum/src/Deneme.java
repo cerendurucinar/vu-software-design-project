@@ -63,8 +63,11 @@ public class Deneme extends Application {
         GridPane gridPane = setupGridPane(primaryStage);
         buttonBox = setupControlButtons(primaryStage);
         VBox vbox = setupUI(primaryStage, gridPane);
-        setupAddSoundButton(vbox,primaryStage);
-        setupRemoveSoundButton(vbox,primaryStage);
+        AddSoundButton addSoundBtn = new AddSoundButton("Add New Sound", new AddSoundCommand(),primaryStage);
+        vbox.getChildren().add(addSoundBtn);
+
+        RemoveSoundButton removeSoundBtn = new RemoveSoundButton("Delete A Sound",new RemoveSoundCommand(),primaryStage );
+        vbox.getChildren().add(removeSoundBtn);
 
         vbox.setAlignment(Pos.CENTER);
 
@@ -268,53 +271,53 @@ public class Deneme extends Application {
 //        });
 //
 //    }
-    private void setupAddSoundButton(VBox vbox, Stage primaryStage) {
-        Button addSoundBtn = new Button("+");
-        addSoundBtn.setOnAction(e -> {
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Select MIDI Sound File");
-            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("MIDI Files", "*.mid", "*.midi"));
-            File selectedFile = fileChooser.showOpenDialog(primaryStage);
-            if (selectedFile != null) {
-                String soundName = selectedFile.getName().substring(0, selectedFile.getName().lastIndexOf('.'));
-                String soundFile = selectedFile.getAbsolutePath();
-                SoundFactory.addSound(soundName, soundFile);
-            }
-        });
-        vbox.getChildren().add(addSoundBtn);
-    }
+//    private void setupAddSoundButton(VBox vbox, Stage primaryStage) {
+//        Button addSoundBtn = new Button("+");
+//        addSoundBtn.setOnAction(e -> {
+//            FileChooser fileChooser = new FileChooser();
+//            fileChooser.setTitle("Select MIDI Sound File");
+//            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("MIDI Files", "*.mid", "*.midi"));
+//            File selectedFile = fileChooser.showOpenDialog(primaryStage);
+//            if (selectedFile != null) {
+//                String soundName = selectedFile.getName().substring(0, selectedFile.getName().lastIndexOf('.'));
+//                String soundFile = selectedFile.getAbsolutePath();
+//                SoundFactory.addSound(soundName, soundFile);
+//            }
+//        });
+//        vbox.getChildren().add(addSoundBtn);
+//    }
 
-    private void setupRemoveSoundButton(VBox vbox, Stage primaryStage) {
-        Button removeSoundBtn = new Button("-");
-        removeSoundBtn.setOnAction(event -> {
-            if (seq.isOn()) {
-                // Inform the user that removal is not allowed during playback
-                DialogUI.showAlert(primaryStage, Alert.AlertType.WARNING,"Removal Not Allowed","Cannot Remove Sound During Playback","Please stop the sequence before removing a sound.", null,ButtonType.OK);
-
-            }else {
-                ButtonType REMOVE_SOUND = new ButtonType("Remove Sound");
-                ComboBox<String> soundOptions = new ComboBox<>();
-                soundOptions.getItems().addAll(SoundFactory.getAllSoundNames());
-                Optional<ButtonType> result = DialogUI.showAlert(primaryStage, Alert.AlertType.CONFIRMATION, "Remove A Sound", "Select a Sound", null, new VBox(soundOptions), REMOVE_SOUND, ButtonType.CANCEL);
-
-
-                if (result.isPresent() && result.get() == REMOVE_SOUND) {
-                    Optional<ButtonType> confirmationResult = DialogUI.showAlert(primaryStage, Alert.AlertType.CONFIRMATION, "", "Are you sure you want to remove this sound?", "", null, ButtonType.OK, ButtonType.CANCEL);
-
-                    if (confirmationResult.isPresent() && confirmationResult.get() == ButtonType.OK) {
-                        String selectedSound = soundOptions.getValue();
-
-                        // Create and execute the remove sound command
-                        RemoveSoundCommand removeSoundCommand = new RemoveSoundCommand(selectedSound);
-                        removeSoundCommand.execute();
-
-                    }
-                }
-            }
-        });
-
-        vbox.getChildren().add(removeSoundBtn);
-    }
+//    private void setupRemoveSoundButton(VBox vbox, Stage primaryStage) {
+//        Button removeSoundBtn = new Button("-");
+//        removeSoundBtn.setOnAction(event -> {
+//            if (seq.isOn()) {
+//                // Inform the user that removal is not allowed during playback
+//                DialogUI.showAlert(primaryStage, Alert.AlertType.WARNING,"Removal Not Allowed","Cannot Remove Sound During Playback","Please stop the sequence before removing a sound.", null,ButtonType.OK);
+//
+//            }else {
+//                ButtonType REMOVE_SOUND = new ButtonType("Remove Sound");
+//                ComboBox<String> soundOptions = new ComboBox<>();
+//                soundOptions.getItems().addAll(SoundFactory.getAllSoundNames());
+//                Optional<ButtonType> result = DialogUI.showAlert(primaryStage, Alert.AlertType.CONFIRMATION, "Remove A Sound", "Select a Sound", null, new VBox(soundOptions), REMOVE_SOUND, ButtonType.CANCEL);
+//
+//
+//                if (result.isPresent() && result.get() == REMOVE_SOUND) {
+//                    Optional<ButtonType> confirmationResult = DialogUI.showAlert(primaryStage, Alert.AlertType.CONFIRMATION, "", "Are you sure you want to remove this sound?", "", null, ButtonType.OK, ButtonType.CANCEL);
+//
+//                    if (confirmationResult.isPresent() && confirmationResult.get() == ButtonType.OK) {
+//                        String selectedSound = soundOptions.getValue();
+//
+//                        // Create and execute the remove sound command
+//                        RemoveSoundCommand removeSoundCommand = new RemoveSoundCommand(selectedSound);
+//                        removeSoundCommand.execute();
+//
+//                    }
+//                }
+//            }
+//        });
+//
+//        vbox.getChildren().add(removeSoundBtn);
+//    }
 
 
 
