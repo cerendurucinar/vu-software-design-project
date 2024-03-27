@@ -47,7 +47,7 @@ public class DrumSequence implements Observer {
     public void saveSequence(){
         String fileName = "src/src/main/resources/drum/src/data/data.txt"; // Name of the text file to write to
 
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true))) {
             // Write data to the file
             for (int i = 0; i < currentSequence.size(); i++){
                 String row = currentSequence.get(i);
