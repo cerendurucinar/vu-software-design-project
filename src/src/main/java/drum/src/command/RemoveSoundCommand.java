@@ -5,7 +5,6 @@ import drum.src.sound.SoundFactory;
 
 public class RemoveSoundCommand implements Command{
     private String soundName;
-    private Sound removedSoundDetails;
 
     public RemoveSoundCommand(String soundName) {
         this.soundName = soundName;
@@ -14,7 +13,6 @@ public class RemoveSoundCommand implements Command{
     @Override
     public void execute() {
         if (soundName != null && !soundName.isEmpty()) {
-            removedSoundDetails = SoundFactory.getSound(soundName);
             SoundFactory.removeSound(soundName);
         }
     }
