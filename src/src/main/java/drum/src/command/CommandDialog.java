@@ -1,4 +1,4 @@
-package drum.src.ui;
+package drum.src.command;
 
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
@@ -8,7 +8,7 @@ import javafx.stage.Window;
 
 import java.util.Optional;
 
-public class DialogUI {
+public class CommandDialog {
     public static Optional<ButtonType> showAlert(Window owner, Alert.AlertType alertType, String title, String headerText, String contentText, Node customContent, ButtonType... buttonTypes) {
         Alert alert = new Alert(alertType);
         alert.initOwner(owner);

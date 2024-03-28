@@ -1,9 +1,7 @@
-package drum.src.ui;
+package drum.src.command;
 
 import drum.src.Deneme;
-import drum.src.command.ChangeDurationCommand;
 
-import drum.src.command.Command;
 import drum.src.drumsequencer.DrumSequencer;
 import drum.src.sound.Sound;
 import javafx.scene.control.*;
@@ -12,7 +10,7 @@ import javafx.stage.Window;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
+
 
 
 public class ChangeDurationButton extends Button {
@@ -49,7 +47,7 @@ public class ChangeDurationButton extends Button {
 
         }
 
-        DialogUI.showAlert(owner, Alert.AlertType.CONFIRMATION, "Adjust Durations", "Adjust the duration for each sound:", null, container, ButtonType.OK, ButtonType.CANCEL)
+        CommandDialog.showAlert(owner, Alert.AlertType.CONFIRMATION, "Adjust Durations", "Adjust the duration for each sound:", null, container, ButtonType.OK, ButtonType.CANCEL)
             .ifPresent(response -> {
                 if (response == ButtonType.OK) {
                   rowAndNewDuration.forEach((row, duration) -> {

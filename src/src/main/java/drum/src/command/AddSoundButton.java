@@ -1,10 +1,8 @@
-package drum.src.ui;
+package drum.src.command;
 
-import drum.src.command.AddSoundCommand;
-import drum.src.drumsequencer.DrumSequencer;
+
 import javafx.scene.control.Button;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import javafx.stage.Window;
 
 import java.io.File;
