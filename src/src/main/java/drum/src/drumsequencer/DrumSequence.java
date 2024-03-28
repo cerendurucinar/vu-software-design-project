@@ -62,11 +62,11 @@ public class DrumSequence implements Observer {
     public void saveSequence(){
         String fileName = "src/src/main/resources/drum/src/data/data.txt"; // this is the path of the file that contains our preset or saved sequences
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true))) {
-            Iterator<String> seqIterator = currentSequence.iterator();
-            while(seqIterator.hasNext()){
-                String row = seqIterator.next();
+            for (int i = 0; i< currentSequence.size(); i++){
+                String row = currentSequence.get(i);
                 writer.write(row);
             }
+
             writer.write("\n");
         } catch (IOException e) {
             System.err.println("Error writing to file: " + e.getMessage());

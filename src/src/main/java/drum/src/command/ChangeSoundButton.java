@@ -1,6 +1,5 @@
-package drum.src.ui;
+package drum.src.command;
 
-import drum.src.command.ChangeSoundCommand;
 import drum.src.sound.SoundFactory;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
@@ -21,7 +20,7 @@ public class ChangeSoundButton extends Button {
         ComboBox<String> soundOptions = new ComboBox<>();
         soundOptions.getItems().addAll(SoundFactory.getAllSoundNames());
         VBox content = new VBox(soundOptions);
-        Optional<ButtonType> result = DialogUI.showAlert(owner, Alert.AlertType.NONE, "Select New Sound", null, null, content, ButtonType.OK, ButtonType.CANCEL);
+        Optional<ButtonType> result = CommandDialog.showAlert(owner, Alert.AlertType.NONE, "Select New Sound", null, null, content, ButtonType.OK, ButtonType.CANCEL);
         if (result.isPresent() && result.get() == ButtonType.OK) {
             String selectedSound = soundOptions.getValue();
             if (selectedSound != null) {

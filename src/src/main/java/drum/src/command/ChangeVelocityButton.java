@@ -1,7 +1,6 @@
-package drum.src.ui;
+package drum.src.command;
 
 import drum.src.Deneme;
-import drum.src.command.ChangeVelocityCommand;
 import drum.src.drumsequencer.DrumSequencer;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
@@ -44,7 +43,7 @@ public class ChangeVelocityButton extends Button {
             container.getChildren().add(velocitySlider);
         }
 
-        DialogUI.showAlert(owner, Alert.AlertType.CONFIRMATION, "Adjust Velocities", "Adjust the velocity for each sound:", "", container, ButtonType.OK, ButtonType.CANCEL)
+        CommandDialog.showAlert(owner, Alert.AlertType.CONFIRMATION, "Adjust Velocities", "Adjust the velocity for each sound:", "", container, ButtonType.OK, ButtonType.CANCEL)
                 .ifPresent(response -> {
                     if (response == ButtonType.OK) {
                         rowAndNewVelocity.forEach((row, velocity) -> {

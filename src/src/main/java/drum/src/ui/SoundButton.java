@@ -88,7 +88,7 @@ public void setSound(Sound newSound){
 
     @Override
     public void notifyObserver() {
-        observer.update(getRow(), getColumn(), true);
+        observer.update(getRow(), getColumn(), getIsTriggered());
     }
 }
 

@@ -1,6 +1,5 @@
-package drum.src.ui;
+package drum.src.command;
 
-import drum.src.command.RemoveSoundCommand;
 import drum.src.drumsequencer.DrumSequencer;
 import drum.src.sound.SoundFactory;
 import javafx.scene.control.Alert;
@@ -27,17 +26,17 @@ public class RemoveSoundButton extends Button {
     private void onClick(Window owner) {
          sequencer = DrumSequencer.getInstance();
         if (sequencer.isOn()) {
-            DialogUI.showAlert(owner, Alert.AlertType.WARNING,"Removal Not Allowed","Cannot Remove Sound During Playback","Please stop the sequence before removing a sound.", null,ButtonType.OK);
+            CommandDialog.showAlert(owner, Alert.AlertType.WARNING,"Removal Not Allowed","Cannot Remove Sound During Playback","Please stop the sequence before removing a sound.", null,ButtonType.OK);
 
         } else {
             ButtonType REMOVE_SOUND = new ButtonType("Remove Sound");
             ComboBox<String> soundOptions = new ComboBox<>();
             soundOptions.getItems().addAll(SoundFactory.getAllSoundNames());
-            Optional<ButtonType> result = DialogUI.showAlert(owner, Alert.AlertType.CONFIRMATION, "Remove A Sound", "Select a Sound", null, new VBox(soundOptions), REMOVE_SOUND, ButtonType.CANCEL);
+            Optional<ButtonType> result = CommandDialog.showAlert(owner, Alert.AlertType.CONFIRMATION, "Remove A Sound", "Select a Sound", null, new VBox(soundOptions), REMOVE_SOUND, ButtonType.CANCEL);
 
 
             if (result.isPresent() && result.get() == REMOVE_SOUND) {
-                Optional<ButtonType> confirmationResult = DialogUI.showAlert(owner, Alert.AlertType.CONFIRMATION, "", "Are you sure you want to remove this sound?", "", null, ButtonType.OK, ButtonType.CANCEL);
+                Optional<ButtonType> confirmationResult = CommandDialog.showAlert(owner, Alert.AlertType.CONFIRMATION, "", "Are you sure you want to remove this sound?", "", null, ButtonType.OK, ButtonType.CANCEL);
 
                 if (confirmationResult.isPresent() && confirmationResult.get() == ButtonType.OK) {
                     String selectedSound = soundOptions.getValue();

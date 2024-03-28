@@ -2,9 +2,6 @@ package drum.src;
 import drum.src.command.*;
 import drum.src.drumsequencer.DrumSequence;
 import drum.src.drumsequencer.DrumSequencer;
-import drum.src.sound.Sound;
-
-import drum.src.sound.SoundFactory;
 
 import drum.src.ui.*;
 import javafx.application.Application;
@@ -15,17 +12,10 @@ import javafx.scene.Scene;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.FileChooser;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.Slider;
 import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 
 import javafx.stage.Stage;
@@ -33,10 +23,8 @@ import javafx.stage.Window;
 
 import javax.sound.midi.MidiSystem;
 import javax.sound.midi.MidiUnavailableException;
-import javax.sound.midi.Synthesizer;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
