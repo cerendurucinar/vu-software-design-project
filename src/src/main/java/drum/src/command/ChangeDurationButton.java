@@ -1,6 +1,6 @@
 package drum.src.command;
 
-import drum.src.Deneme;
+import drum.src.DrumMachineMain;
 
 import drum.src.drumsequencer.DrumSequencer;
 import drum.src.sound.Sound;
@@ -29,7 +29,7 @@ public class ChangeDurationButton extends Button {
         VBox container = new VBox(10);
         Map<Integer, Integer> rowAndNewDuration = new HashMap<>();
 
-        for (int i = 0; i < Deneme.NUM_ROWS; i++) {
+        for (int i = 0; i < DrumMachineMain.NUM_ROWS; i++) {
             final int row = i;
             DrumSequencer seq = DrumSequencer.getInstance();
             Sound s = seq.getSoundButtonList().get(row).get(0).getSound();

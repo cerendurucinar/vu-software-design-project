@@ -30,7 +30,7 @@ import java.io.IOException;
 import java.util.*;
 
 
-public class Deneme extends Application {
+public class DrumMachineMain extends Application {
     public List<List<SoundButton>> soundButtonList = new ArrayList<>();
 
     public static final int NUM_ROWS = 4;
