@@ -1,6 +1,6 @@
 package drum.src.drumsequencer;
 
-import drum.src.sound.Sound;
+
 import drum.src.ui.SoundButton;
 import javafx.application.Platform;
 import javafx.scene.control.Button;
@@ -56,10 +56,10 @@ public class DrumSequencer { // TODO:rename
                     for (int r = 0; r < soundButtonList.size(); r++) {
 
                         if (soundButtonList.get(r).get(c).getIsTriggered()) {
-                            Sound sound = soundButtonList.get(r).get(c).getSound();
-                                notesToPlay.add(sound.getSoundFile());
-                                velocities.add(sound.getVelocity());
-                                durations.add(sound.getDuration());
+                            SoundButton sound = soundButtonList.get(r).get(c);
+                                notesToPlay.add(sound.getSound().getSoundFile());
+                                velocities.add(sound.getSound().getVelocity());
+                                durations.add(sound.getSound().getDuration());
                         }
                     }
 

@@ -1,6 +1,5 @@
 package drum.src.sound;
 
-import drum.src.drumsequencer.DrumSequencer;
 import drum.src.ui.SoundButton;
 
 import java.util.List;
