@@ -3,6 +3,11 @@ package drum.src.ui;
 import drum.src.drumsequencer.*;
 import javafx.scene.control.Button;
 
+/**
+ * PlayButton is a UI component that handles click events on the button, toggling
+ * the play state of the sequencer and updating the button's text to show
+ * the current state (playing or stopped).
+ */
 public  class PlayButton extends StateButton{
         private DrumSequencer seq;
         public PlayButton(String buttonText, DrumSequencer seq) {
@@ -10,6 +15,7 @@ public  class PlayButton extends StateButton{
             this.button.setOnAction(e -> onClick());
             this.seq = seq;
         }
+
 
         @Override
         public void onClick() {
