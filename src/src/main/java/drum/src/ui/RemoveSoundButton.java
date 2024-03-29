@@ -15,10 +15,23 @@ import javafx.stage.Window;
 
 import java.util.Optional;
 
+
+
+/**
+ * RemoveSoundButton is a UI component class designed to allow users to remove sounds
+ * from the drum sequencer. It extends the Button class and uses the command pattern
+ * for executing the removal action.
+ */
+
 public class RemoveSoundButton extends Button {
     private final RemoveSoundCommand command;
     DrumSequencer sequencer;
 
+    /**
+     * @param buttonText The text displayed on the button
+     * @param command    The command that encapsulates the remove sound action
+     * @param owner      The owner window for  dialogs or alerts triggered by this button
+     */
     public RemoveSoundButton(String buttonText, RemoveSoundCommand command, Window owner) {
         super(buttonText);
         this.sequencer = DrumSequencer.getInstance();

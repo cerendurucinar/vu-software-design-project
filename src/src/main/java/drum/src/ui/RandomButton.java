@@ -4,21 +4,24 @@ import drum.src.drumsequencer.DrumSequence;
 import javafx.scene.control.Button;
 
 
-
+/**
+ * RandomButton is a UI component that initiates the creation of
+ * a random drum sequence within the application.
+ */
 public class RandomButton extends AbstractButton{
     private Button button;
-    private DrumSequence seq; // update the class diagram if it is like this
+    private DrumSequence sequence;
 
 
-    public RandomButton(String buttonText, DrumSequence seq) {
+    public RandomButton(String buttonText, DrumSequence sequence) {
         this.button = new Button(buttonText);
         this.button.setOnAction(e -> onClick());
-        this.seq = seq;
+        this.sequence = sequence;
     }
 
     @Override
     public void onClick() {
-        seq.createRandomSequence();
+        sequence.createRandomSequence();
     }
 
     public Button getFxButton() {

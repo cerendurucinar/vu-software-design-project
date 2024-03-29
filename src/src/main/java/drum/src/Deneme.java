@@ -102,15 +102,10 @@ public class Deneme extends Application {
         ClearButton clearButton= new ClearButton("Clear", seq);
         RandomButton randomButton = new RandomButton("Random", sequence);
         SaveSequenceButton saveButton = new SaveSequenceButton("Save Sequence", sequence);
-        //Button velButton = new Button("Change Velocities");
-        // ChangeVelocityCommand velocityCommand = new ChangeVelocityCommand(seq);
-
         ChangeVelocityButton changeVelocityButton = new ChangeVelocityButton("Change Velocities", new ChangeVelocityCommand(),primaryStage);
         ChangeDurationButton changeDurationButton = new ChangeDurationButton("Change Durations", new ChangeDurationCommand(),primaryStage);
 
-        //Button durButton = new Button("Change Durations");
-        //velButton.setOnAction( e-> showVelocityAdjustmentDialog(primaryStage));
-        //durButton.setOnAction(e -> showDurationAdjustmentDialog(primaryStage));
+
         ComboBox<DrumSequencer.TimeSignatureEnum> timesignaturecombobox = seq.createTimeSignature();
 
         buttonBox = new HBox(playButton.getFxButton(), clearButton.getFxButton(), randomButton.getFxButton(), changeVelocityButton, changeDurationButton, timesignaturecombobox, saveButton.getFxButton());
@@ -163,9 +158,6 @@ public class Deneme extends Application {
 
                 String btn_name = "Button" + (row * NUM_COLS + col + 1);
 
-
-
-                // Sound sound = new Sound("Sound " + (row * numCols + col + 1), "Sound"+String.valueOf(row)+".mid");
                 String name = "Sound"+String.valueOf(row);
                 SoundButton sbtn = new SoundButton(btn_name, name , row, col);
                 sbtn.setObserver(sequence);
@@ -178,28 +170,8 @@ public class Deneme extends Application {
         }
 
 
-
         return gridPane;
 
-    }
-
-
-    //    private void setupSoundButtons(GridPane gridPane, Stage primaryStage) {
-//        for (int row = 0; row < NUM_ROWS; row++) {
-//            List<SoundButton> rowList = new ArrayList<>();
-//            ChangeSoundButton changeSoundBtn = new ChangeSoundButton("Change Sound",seq,row,primaryStage);
-//            gridPane.add(changeSoundBtn.getButton(), 0, row);
-//            for (int col = 0; col < NUM_COLS; col++) {
-//                SoundButton sbtn = createSoundButton(row, col);
-//                rowList.add(sbtn);
-//                gridPane.add(sbtn.getBtn(), col + 1, row); // col+1 to account for the "+" button
-//            }
-//            soundButtonList.add(rowList);
-//        }
-//    }
-    private SoundButton createSoundButton(int row, int col) {
-        String name = "Sound" + row;
-        return new SoundButton("Button " + (row * NUM_COLS + col + 1), name, row, col);
     }
 
 
@@ -208,116 +180,7 @@ public class Deneme extends Application {
             DrumSequencer.synthesizer.close();
         }
     }
-//    public static void showVelocityAdjustmentDialog(Stage owner) { // TODO: CHANGE YOUR SEQUENCE AND CLASS DIAGRAM YOU DO NOT CHECK VELOCITY NOW
-//
-//
-//        Map<Integer, Integer> rowAndNewVelocity = new HashMap<>();
-//        VBox container = new VBox(10); // 10 is the spacing between elements
-//
-//        for (int i = 0; i < NUM_ROWS; i++) {
-//            final int row = i;
-//            DrumSequencer seq = DrumSequencer.getInstance();
-//            Sound s = seq.getSoundButtonList().get(row).get(0).getSound();
-//            Slider velocitySlider = new Slider(0, 100, s.getVelocity()); // Min, Max, Initial Velocity
-//            velocitySlider.setShowTickLabels(true);
-//            velocitySlider.setShowTickMarks(true);
-//
-//
-//            velocitySlider.valueProperty().addListener((obs, oldValue, newValue) -> {
-//                rowAndNewVelocity.put(row, ((Number) newValue).intValue());
-//            });
-//            container.getChildren().add(velocitySlider);
-//        }
-//
-//        Optional<ButtonType> result = DialogUI.showAlert(owner, Alert.AlertType.CONFIRMATION, "Adjust Velocities", "Adjust the velocity for each sound:", null, container,ButtonType.OK, ButtonType.CANCEL);
-//        result.ifPresent(response -> {
-//            if (response == ButtonType.OK) {
-//                rowAndNewVelocity.forEach((row, velocity) -> {
-//                    Command changeVelocity = new ChangeVelocityCommand( row, velocity);
-//                    changeVelocity.execute();
-//                });
-//            }
-//        });
-//
-//
-//    }
 
-    //    public static void showDurationAdjustmentDialog(Stage owner) { // TODO: CHANGE YOUR SEQUENCE AND CLASS DIAGRAM YOU DO NOT CHECK VELOCITY NOW
-//
-//        VBox container = new VBox(10); // 10 is the spacing between elements
-//        Map<Integer, Integer> rowAndNewDuration = new HashMap<>();
-//        for (int i = 0; i < NUM_ROWS; i++) {
-//            final int row = i;
-//            DrumSequencer seq = DrumSequencer.getInstance();
-//            Sound s = seq.getSoundButtonList().get(row).get(0).getSound();
-//            Slider durationSlider = new Slider(0, 100, s.getDuration()); // Min, Max, Initial Velocity
-//            durationSlider.setShowTickLabels(true);
-//            durationSlider.setShowTickMarks(true);
-//
-//
-//            durationSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
-//                rowAndNewDuration.put(row, newValue.intValue());
-//            });
-//            container.getChildren().add(durationSlider);
-//        }
-//        Optional<ButtonType> result = DialogUI.showAlert(owner, Alert.AlertType.CONFIRMATION, "Adjust Durations", "Adjust the duration for each sound:", null, container, ButtonType.OK, ButtonType.CANCEL);
-//        result.ifPresent(response -> {
-//            if (response == ButtonType.OK) {
-//                rowAndNewDuration.forEach((row, duration) -> {
-//                    Command changeDuration = new ChangeDurationCommand(DrumSequencer.getInstance(), row, duration);
-//                    changeDuration.execute();
-//                });
-//            }
-//        });
-//
-//    }
-//    private void setupAddSoundButton(VBox vbox, Stage primaryStage) {
-//        Button addSoundBtn = new Button("+");
-//        addSoundBtn.setOnAction(e -> {
-//            FileChooser fileChooser = new FileChooser();
-//            fileChooser.setTitle("Select MIDI Sound File");
-//            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("MIDI Files", "*.mid", "*.midi"));
-//            File selectedFile = fileChooser.showOpenDialog(primaryStage);
-//            if (selectedFile != null) {
-//                String soundName = selectedFile.getName().substring(0, selectedFile.getName().lastIndexOf('.'));
-//                String soundFile = selectedFile.getAbsolutePath();
-//                SoundFactory.addSound(soundName, soundFile);
-//            }
-//        });
-//        vbox.getChildren().add(addSoundBtn);
-//    }
-
-//    private void setupRemoveSoundButton(VBox vbox, Stage primaryStage) {
-//        Button removeSoundBtn = new Button("-");
-//        removeSoundBtn.setOnAction(event -> {
-//            if (seq.isOn()) {
-//                // Inform the user that removal is not allowed during playback
-//                DialogUI.showAlert(primaryStage, Alert.AlertType.WARNING,"Removal Not Allowed","Cannot Remove Sound During Playback","Please stop the sequence before removing a sound.", null,ButtonType.OK);
-//
-//            }else {
-//                ButtonType REMOVE_SOUND = new ButtonType("Remove Sound");
-//                ComboBox<String> soundOptions = new ComboBox<>();
-//                soundOptions.getItems().addAll(SoundFactory.getAllSoundNames());
-//                Optional<ButtonType> result = DialogUI.showAlert(primaryStage, Alert.AlertType.CONFIRMATION, "Remove A Sound", "Select a Sound", null, new VBox(soundOptions), REMOVE_SOUND, ButtonType.CANCEL);
-//
-//
-//                if (result.isPresent() && result.get() == REMOVE_SOUND) {
-//                    Optional<ButtonType> confirmationResult = DialogUI.showAlert(primaryStage, Alert.AlertType.CONFIRMATION, "", "Are you sure you want to remove this sound?", "", null, ButtonType.OK, ButtonType.CANCEL);
-//
-//                    if (confirmationResult.isPresent() && confirmationResult.get() == ButtonType.OK) {
-//                        String selectedSound = soundOptions.getValue();
-//
-//                        // Create and execute the remove sound command
-//                        RemoveSoundCommand removeSoundCommand = new RemoveSoundCommand(selectedSound);
-//                        removeSoundCommand.execute();
-//
-//                    }
-//                }
-//            }
-//        });
-//
-//        vbox.getChildren().add(removeSoundBtn);
-//    }
 
 
 

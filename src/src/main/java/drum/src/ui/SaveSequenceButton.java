@@ -5,6 +5,11 @@ import drum.src.drumsequencer.DrumSequencer;
 import javafx.scene.control.Button;
 import javafx.stage.Window;
 
+
+/**
+ * SaveSequenceButton is a  UI component class, dedicated to saving
+ * the current drum sequence.
+ */
 public class SaveSequenceButton extends AbstractButton {
     private Button button;
     private DrumSequence sequence; // update the class diagram if it is like this

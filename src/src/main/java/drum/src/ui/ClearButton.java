@@ -6,7 +6,7 @@ import javafx.scene.control.Button;
 public class ClearButton extends AbstractButton {
 
     private Button button;
-    private DrumSequencer seq;
+    //private DrumSequencer seq;
 
 
     public ClearButton(String buttonText, DrumSequencer seq) {
