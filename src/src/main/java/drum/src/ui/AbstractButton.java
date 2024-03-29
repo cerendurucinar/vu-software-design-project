@@ -1,6 +1,5 @@
 package drum.src.ui;
 
-import drum.src.drumsequencer.*;
 import javafx.scene.control.Button;
 
 
