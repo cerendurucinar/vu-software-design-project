@@ -8,7 +8,25 @@ import javafx.stage.Window;
 
 import java.util.Optional;
 
+/**
+ * This class aims to simplify the creation and display
+ * of alert dialogs within a JavaFX application.
+ */
 public class CommandDialog {
+
+    /**
+     * Displays a customizable alert dialog
+     *
+     * @param owner The owner window of the alert dialog
+     * @param alertType The type of alert (e.g., INFORMATION, WARNING, ERROR)
+     * @param title The text title of the alert dialog window
+     * @param headerText The header text displayed at the top of the alert content
+     * @param contentText The main text content of the alert
+     * @param customContent A Node object for inclusion of a custom graphical element within the dialog
+     * @param buttonTypes An array of ButtonType objects that will be displayed in the alert. As default "OK" button is used
+     * @return An Optional containing the ButtonType that was clicked to close the dialog
+     */
+
     public static Optional<ButtonType> showAlert(Window owner, Alert.AlertType alertType, String title, String headerText, String contentText, Node customContent, ButtonType... buttonTypes) {
         Alert alert = new Alert(alertType);
         alert.initOwner(owner);

@@ -27,14 +27,13 @@ public class SoundButton extends AbstractButton implements Subject<DrumSequence>
     /**
      * Constructor:
      *
-     * @param buttonText The text to be displayed on the button
      * @param soundName  The name of the sound linked with the button (keys of the sounds Map in SoundFactory)
      * @param row        The row index in the grid layout where this button is located
      * @param col        The column index in the grid layout where this button is located
      */
-    public SoundButton(String buttonText, String soundName, int row, int col){
-        this.button = new Button(buttonText);
+    public SoundButton( String soundName, int row, int col){
         this.sound = SoundFactory.getSound(soundName); // Use factory
+        this.button = new Button(soundName);
         this.row = row;
         this.col = col;
 

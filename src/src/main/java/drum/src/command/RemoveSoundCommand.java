@@ -1,16 +1,15 @@
 package drum.src.command;
 
-import drum.src.drumsequencer.DrumSequencer;
-import drum.src.sound.Sound;
+
 import drum.src.sound.SoundFactory;
 
+/**
+ * This class handles removing a specific sound from the app.
+ */
 public class RemoveSoundCommand implements Command{
-    // this class handles removing a specific sound from the app.
+
     private String soundName;
 
-    public RemoveSoundCommand(String soundName) {
-        this.soundName = soundName;
-    }
 
     @Override
     public void execute() {
@@ -18,9 +17,7 @@ public class RemoveSoundCommand implements Command{
             SoundFactory.removeSound(soundName);
         }
     }
-    public RemoveSoundCommand() {
-
-    }
+    public RemoveSoundCommand() {}
 
     public void setSoundName(String soundName) {
         this.soundName = soundName;

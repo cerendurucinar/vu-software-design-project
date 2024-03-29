@@ -9,10 +9,16 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
+/**
+ *  this class represents a beat sequence. It implements Observer interface,
+ *  and it observers changes in the SoundButton objects. The reason behind that is
+ *  updating the currentSequence when a SoundButton is clicked. his class is responsible
+ *  for generating random sequences, updating the sequence based on user interactions,
+ *  and saving the sequence to a file.
+ */
+
 public class DrumSequence implements Observer {
-    // this class represents a beat sequence. It implements Observer interface
-    // and it is the observer of SoundButton objects. The reason behind that is
-    // updating the currentSequence when a SoundButton is clicked.
+
     private  List<String> currentSequence;
     private DrumSequencer drum_seq;
 
@@ -37,14 +43,7 @@ public class DrumSequence implements Observer {
 
             }
         }
-//        for (int r = 0; r < sbtnList.size(); r++){
-//            for (int c = 0; c < sbtnList.get(r).size(); c++){
-//                boolean randVal = rand.nextBoolean(); // getting a random bool value to randomly determine if a button is clicked or not
-//                if(randVal){
-//                    sbtnList.get(r).get(c).onClick();
-//                }
-//            }
-//        }
+
     }
 
     @Override

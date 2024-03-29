@@ -9,10 +9,17 @@ import javafx.stage.Window;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * It is a UI component that presents the user with sliders for adjusting the velocity (volume)
+ * of each sound in a drum sequencer. It extends the Button class and uses the command pattern
+ * for executing the velocity adjustments.
+ */
+
 
 public class ChangeVelocityButton extends Button {
     private ChangeVelocityCommand command;
     DrumSequencer sequencer;
+
 
     public ChangeVelocityButton(String buttonText, ChangeVelocityCommand command, Window owner) {
 

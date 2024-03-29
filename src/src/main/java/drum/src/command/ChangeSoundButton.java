@@ -7,6 +7,14 @@ import javafx.stage.Window;
 import java.util.Optional;
 
 
+/**
+ * ChangeSoundButton is a UI component for changing the sound of all buttons in a specified row.
+ * When clicked, it presents the user with a list of available sounds to choose from,
+ * and upon selection, updates the sound accordingly using the ChangeSoundCommand.
+ */
+
+
+
 public class ChangeSoundButton extends Button {
     private ChangeSoundCommand command;
 

@@ -3,8 +3,11 @@ package drum.src.command;
 import drum.src.drumsequencer.DrumSequencer;
 import drum.src.sound.Sound;
 
+/**
+ * This class handles changing the velocity of a specific row's sound
+ */
 public class ChangeVelocityCommand implements Command{
-   // this class handles changing the velocity of a specific row's sound
+
     DrumSequencer sequencer;
     private int row;
     private int newVelocity;

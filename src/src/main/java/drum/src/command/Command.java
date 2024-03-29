@@ -1,6 +1,9 @@
 package drum.src.command;
 
+/**
+ *  Interface of Command design pattern
+ */
 public interface Command {
-    // interface of Command design pattern
+
     void execute();
 }

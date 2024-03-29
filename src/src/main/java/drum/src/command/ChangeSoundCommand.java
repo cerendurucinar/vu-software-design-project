@@ -7,6 +7,9 @@ import drum.src.ui.SoundButton;
 
 import java.util.List;
 
+/**
+ * This class handles changing the sound of all buttons in a specified row
+ */
 public class ChangeSoundCommand implements Command {
     private DrumSequencer sequencer;
     private int row;

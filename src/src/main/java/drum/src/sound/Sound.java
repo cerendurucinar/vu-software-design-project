@@ -1,14 +1,23 @@
 package drum.src.sound;
 
-import drum.src.ui.SoundButton;
 
-import java.util.List;
-
+/**
+ * The Sound class holds information necessary to play the sound, the name of the sound, the file path
+ * to the audio file, and parameters velocity and duration. It allows for dynamic adjustment of velocity and
+ * duration.
+ */
 public class Sound {
     private String soundName;
     private String soundFile;
     private int velocity = 50;
     private double duration = 50;
+
+    /**
+     * Constructs a new Sound object with specified name and file path.
+     *
+     * @param soundName The name of the sound.
+     * @param soundFile File's Path from Repository Root
+     */
     public Sound(String soundName, String soundFile){
         this.soundFile = soundFile;
         this.soundName = soundName;
@@ -24,8 +33,9 @@ public class Sound {
     }
 
 
-    public int getVelocity() {
-        return velocity;
+    public int getVelocity() {return velocity;}
+    public double getDuration() {
+        return duration;
     }
 
     public synchronized void changeVelocity(int velocity) {
@@ -35,9 +45,7 @@ public class Sound {
         this.duration = duration;
     }
 
-    public double getDuration() {
-        return duration;
-    }
+
 
 
 
