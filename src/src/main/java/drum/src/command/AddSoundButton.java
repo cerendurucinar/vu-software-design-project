@@ -7,6 +7,10 @@ import javafx.stage.Window;
 
 import java.io.File;
 
+/**
+ * Represents a button in the user interface that handles the action of selecting and adding
+ * a new sound file through a file chooser dialog, by using the AddSoundCommand for execution.
+ */
 public class AddSoundButton extends Button {
 
     private AddSoundCommand command;

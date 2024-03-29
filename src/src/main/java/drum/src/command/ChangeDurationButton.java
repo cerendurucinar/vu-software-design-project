@@ -12,7 +12,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-
+/**
+ * It is a UI component that presents the user with sliders for adjusting the duration
+ * of each sound in a drum sequencer. It extends the Button class and uses the command pattern
+ * for executing the duration adjustments.
+ */
 public class ChangeDurationButton extends Button {
     private ChangeDurationCommand command;
     DrumSequencer sequencer;
