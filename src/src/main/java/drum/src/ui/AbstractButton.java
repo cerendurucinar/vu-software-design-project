@@ -3,10 +3,16 @@ package drum.src.ui;
 import drum.src.drumsequencer.*;
 import javafx.scene.control.Button;
 
+
+/**
+ * AbstractButton provides a base class for various button components within the application.
+ * It contains a flag isTriggered for toggle behaviour of buttons and a JavaFX Button for
+ * graphical representation of the button.
+ */
 public abstract class AbstractButton {
     Button button;
     boolean isTriggered = false;
-    DrumSequencer seq;
+
 
     public abstract void onClick();
 
