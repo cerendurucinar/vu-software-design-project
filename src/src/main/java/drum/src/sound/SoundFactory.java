@@ -13,8 +13,8 @@ public class SoundFactory {
     /**
      * Map to hold Sound objects
      * Conventions:
-     * String :The name of the new sound.
-     * Sound : uses constructor with (SoundName, PAth from Repository Root )
+     * String :The name of the sound.
+     * Sound : uses constructor with (SoundName, Path from Repository Root )
      */
     private static final Map<String, Sound> sounds = new HashMap<>();
 

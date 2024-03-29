@@ -14,9 +14,12 @@ import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.*;
 
+/**
+ *  This class handles the playing and stopping the beat logic. The class is designed with Singleton
+ *   pattern because we want our DrumSequencer to be unique to not have some conflicts when playing.
+ */
 public class DrumSequencer {
-    // This class handles the playing and stopping the beat logic. The class is designed with Singleton
-    // pattern because we want our DrumSequencer to be unique to not have some conflicts when playing.
+
     private boolean isOn;
     private List<List<SoundButton>> soundButtonList = new ArrayList<>();
     public static Synthesizer synthesizer;
@@ -25,8 +28,15 @@ public class DrumSequencer {
 
     private ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(10);
 
+    // Singleton instance
     private static DrumSequencer instance = new DrumSequencer(false);
 
+    // Private constructor to enforce singleton pattern.
+    private DrumSequencer(boolean isOn) {
+        this.isOn = isOn;
+    }
+
+    // Public method to access the singleton instance.
     public static DrumSequencer getInstance(){
         return instance;
     }
@@ -36,9 +46,7 @@ public class DrumSequencer {
         this.soundButtonList = soundButtonList;
     }
 
-    private DrumSequencer(boolean isOn) {
-        this.isOn = isOn;
-    }
+
 
     public void play(){
         Thread playThread = new Thread(() -> {

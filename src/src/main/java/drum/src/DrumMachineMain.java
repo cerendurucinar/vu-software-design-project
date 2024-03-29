@@ -133,10 +133,10 @@ public class DrumMachineMain extends Application {
             gridPane.add(changeSoundBtn, 0, row);
             int col = 0;
             while (colIterator.hasNext()) {
-                String btn_name = "Button" + (row * NUM_COLS + col + 1);
+
                 String name = "Sound"+String.valueOf(row);
                 SoundButton sbtnIt = colIterator.next();
-                SoundButton sbtn = new SoundButton(btn_name, name , row, col);
+                SoundButton sbtn = new SoundButton(name , row, col);
                 sbtnIt = sbtn;
                 sbtn.setObserver(sequence);
 
