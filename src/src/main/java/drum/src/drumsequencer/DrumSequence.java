@@ -59,7 +59,8 @@ public class DrumSequence implements Observer {
     }
 
     public void saveSequence(){
-        String fileName = "src/src/main/resources/drum/src/data/data.txt"; // this is the path of the file that contains our preset or saved sequences
+        //String fileName = "src/src/main/resources/drum/src/data/data.txt"; // this is the path of the file that contains our preset or saved sequences
+        String fileName = "./data.txt";
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true))) {
             for (int i = 0; i< currentSequence.size(); i++){
                 String row = currentSequence.get(i);

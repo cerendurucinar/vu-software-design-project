@@ -6,6 +6,7 @@ import drum.src.drumsequencer.DrumSequencer;
 import drum.src.ui.*;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -20,6 +21,7 @@ import javafx.stage.Modality;
 
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import javafx.stage.WindowEvent;
 
 import javax.sound.midi.MidiSystem;
 import javax.sound.midi.MidiUnavailableException;
@@ -61,6 +63,12 @@ public class DrumMachineMain extends Application {
 
         Scene scene = new Scene(vbox, 300, 200);
         primaryStage.setScene(scene);
+
+        //closing application
+        primaryStage.setOnCloseRequest(event -> {
+            Platform.exit(); // Close the application
+            System.exit(0); // Ensure all threads are terminated
+        });
 
         primaryStage.show();
     }
@@ -157,7 +165,8 @@ public class DrumMachineMain extends Application {
 
         ComboBox<String> seqOptions = new ComboBox<>();
         Set<String> sequenceSet = new HashSet<String>();
-        String filePath = "src/src/main/resources/drum/src/data/data.txt";
+        //String filePath = "src/src/main/resources/drum/src/data/data.txt";
+        String filePath = "./data.txt";
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
