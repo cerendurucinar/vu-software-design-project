@@ -1,7 +1,10 @@
 # Software Design 
-This is the template for the team project of the Software Design course at the Vrije Universiteit Amsterdam. 
+In order to run the application, you need to run the executable jar file which is in the "Executable_Jar" folder. Inside this folder resource folder also exist so do not try to run the executable jar outside of this folder.
 
-When submitting your project, remember to make a [GitHub release](https://docs.github.com/en/repositories/releasing-projects-on-github/managing-releases-in-a-repository) containing the fat Jar of your project in the `out` folder here. The fat Jar is the result of the full build of your project via Gradle.
+In any case if jar file do not work as planned, you can run the application in the intellij by updating following paths in the code:
 
-The fat Jar must be runnable using a simple `java -jar <fat jar>` command.
+DrumSequence.java -> line 62-63 -> update the path of the resources folder
 
+DrumMachineMain.java -> line 168-169 -> update the path of the resources folder
+
+SoundFactory.java -> line 27-30 to line 33-36 -> update the path of the resources folder
