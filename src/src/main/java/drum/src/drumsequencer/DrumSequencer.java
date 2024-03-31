@@ -223,8 +223,8 @@ private void adjustSequenceForVelocityAndDuration(Sequence sequence, int velocit
     }
 
     public enum TimeSignatureEnum {
-        FOUR_BY_FOUR("4X4"),
-        EIGHT_BY_SIXTEEN("8X16");
+        Tempo1("4X4"),
+        Tempo2("8X16");
 
         private final String displayName;
 
@@ -239,21 +239,21 @@ private void adjustSequenceForVelocityAndDuration(Sequence sequence, int velocit
 
     public ComboBox<TimeSignatureEnum> createTimeSignature() {
         ObservableList<TimeSignatureEnum> timeSignatureOptions = FXCollections.observableArrayList(
-                TimeSignatureEnum.FOUR_BY_FOUR,
-                TimeSignatureEnum.EIGHT_BY_SIXTEEN
+                TimeSignatureEnum.Tempo1,
+                TimeSignatureEnum.Tempo2
         );
 
         ComboBox<TimeSignatureEnum> timeSignatureComboBox = new ComboBox<>(timeSignatureOptions);
-        timeSignatureComboBox.setValue(TimeSignatureEnum.FOUR_BY_FOUR);
+        timeSignatureComboBox.setValue(TimeSignatureEnum.Tempo1);
 
         timeSignatureComboBox.setOnAction(event -> {
             TimeSignatureEnum selectedTimeSignature = timeSignatureComboBox.getValue();
 
             switch (selectedTimeSignature) {
-                case FOUR_BY_FOUR:
+                case Tempo1:
                     sleepTimeMilliseconds = 1000;
                     break;
-                case EIGHT_BY_SIXTEEN:
+                case Tempo2:
                     sleepTimeMilliseconds = 500;
                     break;
                 default:
